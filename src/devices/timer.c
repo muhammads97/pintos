@@ -6,7 +6,7 @@
 #include "devices/pit.h"
 #include "threads/interrupt.h"
 #include "threads/synch.h"
-#include "threads/thread.h"
+
   
 /* See [8254] for hardware details of the 8254 timer chip. */
 
@@ -19,6 +19,9 @@
 
 /* Number of timer ticks since OS booted. */
 static int64_t ticks;
+
+/* a list for waiting threads */
+static struct list blocked_queue;
 
 /* Number of loops per timer tick.
    Initialized by timer_calibrate(). */
@@ -37,6 +40,7 @@ timer_init (void)
 {
   pit_configure_channel (0, 2, TIMER_FREQ);
   intr_register_ext (0x20, timer_interrupt, "8254 Timer");
+  list_init(&blocked_queue);
 }
 
 /* Calibrates loops_per_tick, used to implement brief delays. */
@@ -86,7 +90,7 @@ timer_elapsed (int64_t then)
 
 /* Sleeps for approximately TICKS timer ticks.  Interrupts must
    be turned on. */
-void
+/* void
 timer_sleep (int64_t ticks) 
 {
   int64_t start = timer_ticks ();
@@ -94,6 +98,20 @@ timer_sleep (int64_t ticks)
   ASSERT (intr_get_level () == INTR_ON);
   while (timer_elapsed (start) < ticks) 
     thread_yield ();
+}*/
+
+void
+timer_sleep (int64_t ticks)
+{
+    ASSERT (intr_get_level () == INTR_ON);
+	if(ticks > 0){
+    	struct thread *t = thread_current();
+    	enum intr_level i_l = intr_disable();
+    	t->blocked_until = ticks + timer_ticks(); //time to wake at
+		list_insert_ordered(&blocked_queue, &t->elem, sleep_list_comparator, NULL);
+		thread_block();
+		intr_set_level(i_l);
+	}
 }
 
 /* Sleeps for approximately MS milliseconds.  Interrupts must be
@@ -170,8 +188,19 @@ timer_print_stats (void)
 static void
 timer_interrupt (struct intr_frame *args UNUSED)
 {
-  ticks++;
-  thread_tick ();
+	ticks++;
+	thread_tick ();
+
+	if(list_empty(&blocked_queue)) return;
+	struct list_elem* e = list_front(&blocked_queue);
+	struct thread* t = list_entry(e, struct thread, elem);
+	while(t->blocked_until < ticks){
+		list_remove(e);
+		thread_unblock(t);
+		if(list_empty(&blocked_queue)) return;
+		e = list_front(&blocked_queue);
+		t = list_entry(e, struct thread, elem);
+	}
 }
 
 /* Returns true if LOOPS iterations waits for more than one timer
@@ -243,4 +272,13 @@ real_time_delay (int64_t num, int32_t denom)
      the possibility of overflow. */
   ASSERT (denom % 1000 == 0);
   busy_wait (loops_per_tick * num / 1000 * TIMER_FREQ / (denom / 1000)); 
+}
+
+bool sleep_list_comparator(struct list_elem *a, struct list_elem *b, void *aux)
+{
+	struct thread *t1, *t2;
+	t1 = list_entry(a, struct thread, elem);
+	t2 = list_entry(b, struct thread, elem);
+	if (t1->blocked_until < t2->blocked_until) return true;
+	else return false;
 }

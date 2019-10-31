@@ -1,0 +1,1960 @@
+[33mcommit 691dc32da10bea5e34dbaf58c6983399703a02be[m[33m ([m[1;36mHEAD -> [m[1;32mpriority_scheduling[m[33m, [m[1;31morigin/priority_scheduling[m[33m, [m[1;31morigin/master[m[33m, [m[1;31morigin/advanced_scheduling[m[33m, [m[1;32mmaster[m[33m, [m[1;32madvanced_scheduling[m[33m)[m
+Author: Muhammad Salah <msalah.29.10@gmail.com>
+Date:   Wed Oct 30 13:37:04 2019 +0200
+
+    alarm clock done
+
+[33mcommit 2a6d2a58be906464b0fbe999eb5ce98d821e97db[m
+Author: WyldeCat <skan1543@gmail.com>
+Date:   Wed May 16 17:00:15 2018 +0900
+
+    Change the path in pintos-gdb to proper one
+
+[33mcommit 52fd7eb25b15662abfacca92e20416cb29d85395[m
+Author: Farshad Ghanei <farshadg@buffalo.edu>
+Date:   Wed Mar 28 13:34:35 2018 -0400
+
+    timer: Fix timer calibration logic.
+    
+    loops_per_tick calculation should get updated with loops_per_tick, not with
+    high_bit.
+
+[33mcommit c3f2bdb4fcd99dca631962dccb21214e2847f3a3[m
+Author: John Ousterhout <ouster@cs.stanford.edu>
+Date:   Wed Mar 28 09:59:11 2018 -0700
+
+    Fix problems compiling documentation
+    * Two warnings (deprecated regex syntax)
+    * One error (couldn't find pintos-t2h.init without "./" prefix)
+
+[33mcommit 1bc4f6f7b325a177e7ddf0d7039cb5c7921dd721[m
+Author: Farshad Ghanei <farshadg@buffalo.edu>
+Date:   Tue Feb 13 19:45:37 2018 -0500
+
+    doc: Fix typo.
+    
+    Fixed a type in the Guide, Section E.5 , Subsection E.5.1 Using GDB,
+
+[33mcommit 4053c61636a5ee545c8130bcedea12d77b85de4c[m
+Author: Darshit Shah <s8dashah@stud.uni-saarland.de>
+Date:   Wed Oct 25 14:53:54 2017 +0200
+
+    On newer systems -ltinfo needs to be explicitly added to the link flags
+
+[33mcommit 21848a29ff6f6d52751bd91463be03b790f6e3e5[m
+Author: Darshit Shah <s8dashah@stud.uni-saarland.de>
+Date:   Tue Oct 24 15:14:58 2017 +0200
+
+    Modify the linker script to match the generated binary
+    
+    Newer versions of GCC (tested with GCC 7), emit more sections in the
+    binary. Fix the computation of the start of the BSS section to prevent
+    zeroing out parts of the data section
+
+[33mcommit 258ac974c5f71fee4e6e2e10c7b26fda6a823d59[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Tue Apr 26 08:32:19 2016 -0700
+
+    doc: Use texi2pdf instead of pdftex.
+    
+    This automatically reruns pdftex if necessary, to make sure that references
+    are correct.
+    
+    Reported by David Eck <eck@hws.edu>.
+
+[33mcommit 8b39127d9437709ab55ad1ed7ac4fb65245fc57b[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Mon Feb 8 20:48:37 2016 -0800
+
+    pintos: Avoid apparent name collision in definition of SIGALRM subroutine.
+    
+    Without this patch, modern versions of Perl issue the following warnings:
+    
+        Prototype mismatch: sub main::SIGVTALRM () vs none at
+        .../src/utils/pintos line 188.
+        Constant subroutine SIGVTALRM redefined at
+        .../src/utils/pintos line 180.
+    
+    Changing the name of the function avoids the warning.
+    
+    Thanks to Geoffrey Knopf for reporting this problem.
+
+[33mcommit fd2a5afa946474ba0839de0e9da238dbaecbd6a5[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Mon Feb 8 20:47:10 2016 -0800
+
+    pintos: Avoid literal control character in Perl variable name.
+    
+    Modern versions of Perl prefer a caret in variable names over literal
+    control characters and issue a warning if the control character is used.
+    This fixes the warning.
+
+[33mcommit 161bf03beb0aae6ad38aa884cd534a94737d396a[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Mon Feb 8 20:46:18 2016 -0800
+
+    pintos: Fix undefined value warning from Perl on read error.
+    
+    When sysread encounters an error, it returns undef, which yields a warning
+    when compared against 0.  This fixes the problem.
+
+[33mcommit cbf1fae30fd49b3d2495b60ebd53d4c8b919acf1[m
+Author: John Ousterhout <ouster@cs.stanford.edu>
+Date:   Thu Dec 17 16:28:21 2015 -0800
+
+    Clarified wording in design question A2 for vm
+    
+    (Old wording could result in answers other than the desired one)
+
+[33mcommit 691ef658b6d650327b82abf2a346336b176736e9[m
+Author: John Ousterhout <ouster@cs.stanford.edu>
+Date:   Thu Dec 17 15:29:33 2015 -0800
+
+    Make docs compile again
+    
+    With newer versions oF packages such as texinfo and Perl, the
+    documentation no longer compiled. Fixed various issues, and
+    removed dvi and ps from default output formats, since software
+    to generate them is becoming less widely available.
+
+[33mcommit 47747baf50a7db012348a4954b97fc161bcacd19[m
+Author: John Ousterhout <ouster@cs.stanford.edu>
+Date:   Thu Dec 17 11:38:47 2015 -0800
+
+    Updates for new version of qemu
+    
+    Use new isa-debug-exit device for shutdown, switch name to
+    qemu-system-i386.
+
+[33mcommit bb0485f5561709b2d9a97fdeda9bfa1bd55a20c9[m
+Author: John Ousterhout <ouster@cs.stanford.edu>
+Date:   Thu Dec 17 11:36:48 2015 -0800
+
+    Fsutil_ls must close the directory after reading it
+
+[33mcommit a8586578bb7a9dbbbca7b39a9f92058e3f551f9d[m
+Author: John Ousterhout <ouster@cs.stanford.edu>
+Date:   Thu Dec 17 11:33:52 2015 -0800
+
+    Patches to make Bochs 2.6.2 work with Pintos
+    
+    (patches provided by David Mazieres).
+
+[33mcommit bd5dde3034714da175496292c92dc5a37509a311[m
+Author: John Ousterhout <ouster@cs.stanford.edu>
+Date:   Thu Dec 17 11:29:13 2015 -0800
+
+    Fixes exec-bound-3 failures
+    
+    The boundary position wasn't being properly chosen (must ensure that
+    the dst array in boundary.c is always in the last page of the .bss
+    segment).
+
+[33mcommit c1257e8ecdb9f1bec7a37d366d9daac8ba1f19c0[m
+Author: John Ousterhout <ouster@cs.stanford.edu>
+Date:   Thu Dec 17 09:48:35 2015 -0800
+
+    Fixed typo in docs Section 3.1.4.1 (0x08084000 => 0x08048000)
+
+[33mcommit 7410ba55d1c8076a8ea24e5afe54dc820a18733b[m
+Author: John Ousterhout <ouster@cs.stanford.edu>
+Date:   Thu Dec 17 09:43:57 2015 -0800
+
+    Remove mention of CS 107 from  localsettings.texi
+
+[33mcommit 5999404c2b4cec0c27676a7fc81596662875aea5[m
+Author: John Ousterhout <ouster@cs.stanford.edu>
+Date:   Thu Dec 17 09:41:53 2015 -0800
+
+    Switch docs to use Git instead of CVS by default
+    
+    Also a few minor changes to localsettings.texi.
+
+[33mcommit 16c7d34d02045bc7e6165a13c549a7968e074d4b[m
+Author: John Ousterhout <ouster@cs.stanford.edu>
+Date:   Fri Dec 14 14:51:09 2012 -0800
+
+    Added more userprog tests, mostly relating to boundary conditions
+    involving invalid pages (e.g., position system call opcode with first
+    bytes in a valid page and remaining bytes in a nonexistent page).
+
+[33mcommit bffccc54acc0560186b8c38bc4a66897de5158eb[m
+Author: John Ousterhout <ouster@cs.stanford.edu>
+Date:   Thu Dec 17 09:28:35 2015 -0800
+
+    Minor documentation updates
+    
+    Fixed typos and obsolete info, removed Stanford dependencies.
+
+[33mcommit d18533cc294552c39f69781e5a9b04b8882b6364[m
+Author: Pablo de Oliveira <pablo@sifflez.org>
+Date:   Mon Mar 17 19:13:22 2014 +0100
+
+    Fix userprog tests for clang
+    
+    Recent clang version, detect attemps to dereference or call NULL, and
+    eliminate the code.
+    
+    ../../tests/userprog/bad-read.c:11:9: warning: indirection of
+    non-volatile null pointer will be deleted, not trap [-Wnull-dereference]
+            *(int *) NULL);
+            ^~~~~~~~~~~~~
+    
+    This patchs adds the volatile modifier as necessary.
+    It allows to use clang to compile the tests.
+
+[33mcommit f5fa837e313d018a945eaedd28352e7f24e5b1a6[m
+Author: Pablo de Oliveira <pablo@sifflez.org>
+Date:   Mon Mar 17 19:01:59 2014 +0100
+
+    Add ACPI shutdown sequence
+    
+    On QEMU emulator version 1.7.0, the previous shutdown sequence (writing
+    `shutdown` to 0x8900), is not working properly.
+    
+    This patch adds support for the ACPI shutdown code which works on qemu
+    1.7.0 and preserves the old sequence for compatibility.
+
+[33mcommit 231e61ee5370c93ba90af9525c0a9df34d87f0f1[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Sat Sep 1 17:10:29 2012 -0700
+
+    utils/Makefile: Use LOADLIBES instead of LDFLAGS to link the math library.
+    
+    Matthew Pirocchi <mrpirocchi@email.wm.edu>, via John Ousterhout
+    <ouster@cs.stanford.edu> reports that this fixes a problem on his system.
+
+[33mcommit ea904493370d2a752855cc93aad1e27b009dd917[m
+Author: Benedikt Huber <benedikt.huber@gmail.com>
+Date:   Wed Feb 29 15:17:04 2012 +0100
+
+    Fix gcc inline assembler operand constraints for syscall -- as pushl modifies %esp, variable operands must not reference the stack pointer.
+    
+    Without this patch, gcc-4.6.1-9ubuntu3 miscompiles the read syscall to:
+      000000b6 <read>:
+        b6:   ff 74 24 0c             pushl  0xc(%esp)
+        ba:   ff 74 24 08             pushl  0x8(%esp)  ; [!]
+        be:   ff 74 24 04             pushl  0x4(%esp)  ; [!]
+        ...
+
+[33mcommit a094a81a89ccd919a338aa0acfa6cdae282bdf50[m
+Author: Russ Ross <russ@dixie.edu>
+Date:   Wed Aug 24 20:41:30 2011 -0700
+
+    Fix boot under Bochs when Pintos is compiled with recent GCC.
+    
+    When compiled according to the instructions, bochs fails to load
+    the project 1 kernel.  This seems to be due to the latest gcc using an
+    instruction that bochs is not compiled to support.  Adding the
+    '--enable-cpu-level=6' configure option to Bochs, as this commit does,
+    seems to work.
+
+[33mcommit 2d5d792bc8f8a577fffd997f10bd2cea8873ff3c[m
+Author: Russ Ross <russ@dixie.edu>
+Date:   Wed Aug 24 20:40:10 2011 -0700
+
+    Fix Bochs build with recent GCC.
+    
+    bochs-2.2.6 failed to compile with the latest version of gcc.  This commit
+    fixes the problem
+
+[33mcommit 4d8d667bed137a2d791e9cb7befc3cbfb3a31c09[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Wed Mar 9 20:34:33 2011 -0800
+
+    bitmap: Fix mistakes in comments.
+    
+    Reported by a student of Borja Sotomayor <borja@cs.uchicago.edu>.
+
+[33mcommit b14dfcf89212916f3098150131162b7f3e9ae190[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Sat Feb 12 10:19:28 2011 -0800
+
+    Makefile: Use $(MAKE) instead of plain 'make'.
+    
+    This allows make to pass the proper command line arguments to the sub-make.
+
+[33mcommit 8b801a69f8e0c2c4ef7e32a2476786f80f433b8e[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Sat Feb 12 10:04:27 2011 -0800
+
+    thread: Do not disable interrupts unnecessarily while initializing stack.
+    
+    Reported by Francis Russell <fpr02@doc.ic.ac.uk>.
+
+[33mcommit 09fa5c11aff62bd728d4fe8de28a7abaf252fed3[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Sat Feb 12 10:03:53 2011 -0800
+
+    thread: Properly protect 'all_list' around insertion.
+    
+    Reported by Francis Russell <fpr02@doc.ic.ac.uk>.
+
+[33mcommit b913988a0a3b2ed7002acd614fc3a6bae75bdadf[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Wed Dec 15 21:42:12 2010 -0800
+
+    squish-pty: Flush buffered data from pty to stdout when pty's slave closed
+    
+    When the slave side of the pty is closed, the "read" system call returns
+    EIO.  In this situation, squish-pty failed to flush any output that it
+    already had in its buffer (up to 16 bytes) to stdout.  This could cause
+    the "Powering off..." message printed by Pintos just before exiting to
+    be missing from the output.
+    
+    This usually didn't happen, because there are two other exit paths from
+    the relay() function that does most of squish-pty's work.  The most common
+    exit path was (evidently) the one which detected that the child process
+    had died, which did properly flush the buffer.  (The third path was wrong
+    too, and this patch fixes that one too.)
+    
+    This patch fixes the problem by using a single exit path from relay() that
+    always reads any remaining input from the pty (if it is open) and flushes
+    it to stdout.
+    
+    Reported by Borja Sotomayor <borja@cs.uchicago.edu>.
+
+[33mcommit 7d0465caf3136da64ae11a692076710c662cbc89[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Sat Dec 11 09:55:04 2010 -0800
+
+    free-map: Replace U+00A0 "hard spaces" by ordinary ASCII spaces.
+    
+    Reported by Borja Sotomayor <borja@cs.uchicago.edu>.
+
+[33mcommit 91f094e74195edc22a9b741bba4144834942b40c[m
+Author: Joseph Huang <jdhuang@stanford.edu>
+Date:   Wed May 5 09:23:55 2010 -0700
+
+    block: Avoid accessing past the end of the block_by_role array.
+
+[33mcommit 1ec7b011dc73affe02a46be228fbc85d2d74384f[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Sat May 1 11:20:14 2010 -0700
+
+    Make.config: Use a different method to detect --build-id support.
+    
+    Some versions of ld accept /dev/null as a valid input file.  Others will
+    not.  The latter versions will give false negatives for --buil-id support,
+    which breaks linking of Pintos userspace programs.  So use a different
+    method, that I hope will be more reliable, to detect --build-id support.
+    
+    Reported by Joseph Huang <jdhuang@stanford.edu>.
+
+[33mcommit 2026ecceb129b851bd4f1573f7627a50d51e89b5[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Thu Jan 7 09:26:11 2010 -0800
+
+    pintos: Make sure to print buffered data at end of input.
+    
+    Here, $buf might have some data in it that has not yet been printed, but
+    we were discarding it (and trying to read more) without printing it.
+    
+    (In Perl, "do" ensures that the inner block runs at least once; without
+    "do" the condition is evaluated first.)
+
+[33mcommit b9713669e0613652b1ff53601345decf5584ab23[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Tue Jan 26 09:12:50 2010 -0800
+
+    doc: Fix references to power_off() to refer to correct function and file name.
+    
+    Reported by Nathaniel Hardison <hardison@stanford.edu>.
+
+[33mcommit 12d423a1973d59006cd7ffbf8b71cd7409d04703[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Wed Jan 6 22:12:36 2010 -0800
+
+    Support newer versions of QEMU, which do not have the -no-kqemu option.
+    
+    Thanks to David Mazieres for reporting the problem and the fix.
+
+[33mcommit 69abf67e46fa36f6db047586a56204dcad4f07b8[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Fri Nov 13 20:22:41 2009 -0800
+
+    Fix typo in comment describing free_map_allocate().
+    
+    Thanks to Godmar Back for reporting the problem and for the fix.
+
+[33mcommit 12ab4901debfa37cc8a1dd59d5f188788f6bf776[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Sat Oct 24 12:10:54 2009 -0700
+
+    Use round-toward-0 instead of round-to-nearest in fixed-point example.
+    
+    Rounding to nearest raises a host of issues that we don't want students
+    to worry about.
+    
+    Suggested by Godmar Back.
+
+[33mcommit 3b458804e1d0a460fb1c90f06f495b9f7a972424[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Mon Jan 19 22:32:57 2009 -0800
+
+    Remove unnecessary optimization barrier.
+    
+    The compiler can't optimize out the load of "ticks" here because
+    it can't look into intr_disable() and intr_set_level() and know that
+    they don't modify "ticks".
+    
+    Thanks to Martin <mfleener@stanford.edu> for pointing this out.
+
+[33mcommit ffdf5a5f292d3ae73f62422ad66297eb84da26c4[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Sun Dec 21 17:37:44 2008 -0800
+
+    Print a message instead of panicking upon an unexpected interrupt.
+    
+    We cannot expect that we know in detail ever interrupt that can occur
+    on real hardware, so we must cope with exceptional cases a little
+    better.
+
+[33mcommit 6ffbc2b68c34c2d1e42d5f6bcd8f2b94b82d05d7[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Wed Dec 3 21:56:59 2008 -0800
+
+    Avoid long pauses on serial timeout on boot on physical hardware.
+    
+    The Pintos loader writes status to the serial port as well as the
+    VGA console, but this doesn't work out so well on at least some
+    real hardware when nothing is connected to the serial port: each
+    character can take a second or so to display because the BIOS
+    waits for a serial timeout each time.  So, on the first serial
+    timeout, replace the "int $0x14" call by a pair of no-ops.
+    
+    The rest of the changes are part of the struggle not to exceed
+    the maximum loader size.
+
+[33mcommit b4d3499fcc1364906853a073076df97256c9232a[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Wed Dec 3 21:42:42 2008 -0800
+
+    Remove MIT copyright notice and license.
+    
+    Pintos used to contain a loader and I/O functions derived from MIT
+    code, but this has now been entirely eliminated, so there is no
+    longer any reason to retain the MIT copyright notice or license.
+
+[33mcommit b69883172b837d3abff02beb49a2adad6465ba6d[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Wed Dec 3 21:41:18 2008 -0800
+
+    Rewrite the I/O port code.
+    
+    The contents of these functions was derived from code used in the
+    Massachusetts Institute of Technology's 6.828 advanced operating
+    systems course.
+    
+    I deleted the contents of these functions and then rewrote them from
+    scratch without reference to the earlier code, working only from the
+    function comments (which I wrote earlier).
+
+[33mcommit d86b224cc61a1d228ecf619c56894dbdd4ce985e[m
+Author: Godmar Back <godmar@gmail.com>
+Date:   Fri Nov 14 01:13:54 2008 -0500
+
+    added section "Accessing User Memory", including explanation of why
+    pinning is necessary
+    added FAQ for why stack growth may cause page faults above stack pointer
+    minor edits to other sections
+
+[33mcommit 425760a116e437cf758541d5e3a52e0d6a1e1a47[m
+Author: Godmar Back <godmar@gmail.com>
+Date:   Thu Nov 13 21:30:41 2008 -0500
+
+    fixed backtrace to work with -O (now conforms to
+    http://gcc.gnu.org/onlinedocs/gcc/Return-Address.html )
+
+[33mcommit 941eff93628d8fca26ac6359b4cc8326b817beed[m
+Author: Godmar Back <godmar@gmail.com>
+Date:   Wed Nov 12 21:17:21 2008 -0500
+
+    added btthreadall to dump all threads
+    added loadusersymbols to load user symbols from file
+    updated documentation to reflect behavior of qemu's and bochs's gdbstubs
+
+[33mcommit a03618133f7df0954802a470a4bee7674f7aed45[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Tue Nov 11 22:19:01 2008 -0800
+
+    Implement a proper block layer with partition support.
+    
+    This is in preparation for introducing new block devices, in
+    particular USB storage-based block devices so that Pintos can boot
+    from USB memory sticks on notebook and desktop PCs.
+    
+    This block layer was inspired by one from Anthony Romano
+    <chz@vt.edu> but it has been extensively (perhaps entirely) rewritten.
+    Thus, bugs must certainly be blamed on the committer.
+
+[33mcommit bb940d21474958a1d8ee2abffdcb6bac27918398[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Sun Nov 9 20:07:40 2008 -0800
+
+    Make backtraces slightly more reliable.
+    
+    We now ignore pointers that are not null but still clearly wild.
+    
+    We could check that there's really a valid PDE and PTE (I think Linux
+    does this) but it would take more code and be ugly.
+
+[33mcommit f1f2dc8de9e336d83383692d4478bb14a3dafc11[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Sun Nov 9 20:02:19 2008 -0800
+
+    Add PC speaker driver and connect it to '\a' in the VGA console.
+    
+    Based on code from Anthony Romano <chz@vt.edu> but with extensive changes.
+
+[33mcommit 94d17ee9287aec1c4c9ee37ca02615e8293a5f3a[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Sun Nov 9 15:56:05 2008 -0800
+
+    Rename ram_pages to init_ram_pages.
+    
+    This makes it conform to the Pintos convention that a global symbol name
+    begin with its module's name.
+
+[33mcommit 94618414d6e0e051cf95e900c63ed2835ed16a82[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Sun Nov 9 16:19:48 2008 -0800
+
+    Get rid of power_off_when_done global variable.
+    
+    This global variable was not named according to the convention that a
+    global variable name start with its module name.  Furthermore, its usage
+    was somewhat scattered across the source tree.
+    
+    This commit introduces new functions shutdown() and shutdown_configure()
+    to improve the situation.
+
+[33mcommit 19becec31c5704572a3575336c57364d72fd572b[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Sun Nov 9 15:51:01 2008 -0800
+
+    Remove prototypes for removed functions power_off(), reboot().
+
+[33mcommit 0e44b3e0539acc8c47a08c9bfa4a98a42cdc7114[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Sun Nov 9 15:42:02 2008 -0800
+
+    Ignore files produced by "makeinfo".
+
+[33mcommit 9a4067dc5bd3d810ce4b1d9dd8ba394dee4c247b[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Sun Nov 9 15:40:18 2008 -0800
+
+    Mark shutdown_reboot() and shutdown_power_off() as NO_RETURN.
+    
+    Also, make shutdown_reboot() actually behave that way, by trying to reboot
+    forever instead of giving up after some number of tries.
+
+[33mcommit 53641f9bb07aa127b2b5e402e28b7421ce8a7f3b[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Sun Nov 9 15:21:21 2008 -0800
+
+    Allow Bochs users to reboot by clicking the "user" button.
+    
+    The "user_shortcut" Bochs option allows specifying a key combination to
+    send to the VM when the user clicks on the "user" button in the Bochs
+    headerbar.
+    
+    From Godmar, crossported from his usb-integration-aug08 branch.
+
+[33mcommit 41f912229e43e5436dd9040809afe33d228b0a95[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Sun Nov 9 15:22:35 2008 -0800
+
+    Terminate the backtrace that debug_backtrace() would output.
+    
+    From Godmar, crossported from his usb-integration-aug08 branch.
+
+[33mcommit 43dadfe13b843be54ac5fdc9e4496beb47af3b1f[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Sun Nov 9 15:22:25 2008 -0800
+
+    Use 9600 bps for Pintos serial, to match the speed used by the loader.
+    
+    It is important that Pintos and its loader use the same serial speed, so
+    that a terminal program connected to a serial port can be set to a sane
+    speed.  The ideal choice would be 115200 bps, for maximum speed, but the
+    Pintos loader uses the BIOS to do serial output, and the BIOS supports a
+    maximum speed of 9600 bps.
+    
+    From Godmar, crossported from his usb-integration-aug08 branch.
+
+[33mcommit a4e60364ebf69203297ce071914671d2b49d9b6d[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Sun Nov 9 11:41:18 2008 -0800
+
+    Move reboot() and power_off() to new file, and rename to fit convention.
+
+[33mcommit 8b805d179d0bd022182491d91584280a83eb451d[m
+Author: Godmar Back <godmar@gmail.com>
+Date:   Fri Nov 7 23:48:13 2008 -0500
+
+    added note regarding console lock
+
+[33mcommit f017336df083c40df490f2a88e196b3df03ecbd1[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Fri Nov 7 17:23:09 2008 -0800
+
+    Correct comment describing list_remove() behavior.
+    
+    Thanks to Godmar for pointing out the problem.
+
+[33mcommit 54913c009db0536777e2637dc57e69372ba4dbef[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Fri Nov 7 17:12:23 2008 -0800
+
+    Add FAQ item to explain doubled test names in output.
+    
+    Suggested by Godmar.
+
+[33mcommit bcf9f9ab10a3df0fd12e6e69944307a63967a521[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Thu Nov 6 21:54:04 2008 -0800
+
+    Eliminate user_page_limit global symbol.
+    
+    The name "user_page_limit" did not follow the naming convention, which
+    stated that its name should start with palloc_ since it is defined in
+    palloc.c.  But it was only used in one function, so it was better off
+    as a function parameter anyhow.
+    
+    Found by Godmar with his process-linker-map.pl.
+
+[33mcommit dd3e6bfbf9bda711367047e4224695d5464fcfb4[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Thu Nov 6 21:31:30 2008 -0800
+
+    Don't make interrupt stubs global symbols.
+    
+    The stubs are only referenced within intr-stubs.S so there is no reason
+    for them to be exported.
+    
+    Found with Godmar's process-linker-map.pl.
+
+[33mcommit fde3b8ee3eaf48b1a6bb14568aedc207e62accab[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Thu Nov 6 21:19:34 2008 -0800
+
+    Rename base_page_dir to init_page_dir.
+    
+    This makes its name fit the convention that the file name is used as
+    a prefix for global symbol names.
+    
+    Found by Godmar with his process-linker-map.pl script.
+
+[33mcommit 64e74e3536b95c4d0a46aec56bc373ad0f6d470b[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Thu Nov 6 21:55:33 2008 -0800
+
+    Rename schedule_tail() to thread_schedule_tail().
+    
+    This makes its name fit the convention that the file name is used as
+    a prefix for global symbol names.
+    
+    Found by Godmar with his process-linker-map.pl script.
+
+[33mcommit 4391570c999cec9592799ada19df5f91683da58a[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Thu Nov 6 21:12:12 2008 -0800
+
+    Make kernel_pool, user_pool static, since they are used only in palloc.c
+    
+    Found by Godmar with his process-linker-map.pl.
+
+[33mcommit 877208550085617dd296fd66df541b46aa0e91a8[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Thu Nov 6 21:11:26 2008 -0800
+
+    Rename .cvsignore files to .gitignore.
+
+[33mcommit b0a8de6745aebfd327a693c88196e211e523dbc1[m
+Author: Godmar Back <godmar@gmail.com>
+Date:   Tue Nov 4 23:53:26 2008 -0500
+
+    removed trailing whitespace
+
+[33mcommit 0ba9f0015a2af957e583e552740d19e337229d87[m
+Author: Godmar Back <godmar@gmail.com>
+Date:   Tue Nov 4 23:31:45 2008 -0500
+
+    clarified specification for wait() system call
+
+[33mcommit 28034001ef25d7ac4f58c7535a6fce767c9df8f5[m
+Author: Godmar Back <godmar@gmail.com>
+Date:   Fri Oct 17 03:26:23 2008 +0000
+
+    added documentation for thread_foreach functions
+
+[33mcommit 8349a4cbeec56e4b497d98064ce51aba80c1f258[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Thu Oct 16 22:49:48 2008 +0000
+
+    Always make the scratch disk an even multiple of a cylinder in size.
+    
+    The pintos script tried to do so before but "print" and "syswrite"
+    are buffered differently and interfere with one another.
+    
+    Thanks to Karan Misra <kmisra@stanford.edu> for pointing out the
+    problem and confirming the solution.
+
+[33mcommit 3edcfedb8e62970f3293fa676b6691f8658c3c11[m
+Author: Godmar Back <godmar@gmail.com>
+Date:   Wed Aug 27 16:52:04 2008 +0000
+
+    - added thread_foreach
+    - added debug_backtrace_all
+    - updated P1 solution to take advantage of this new code
+
+[33mcommit ef87ec47544e7a120d19211b6332d41b11403992[m
+Author: Godmar Back <godmar@gmail.com>
+Date:   Wed Aug 27 14:34:24 2008 +0000
+
+    removed 'address' option for Bochs.
+    It makes Bochs > 2.2.6 fail with "[MEM0 ] ROM: System BIOS must end at 0xfffff"
+    and, according to http://www.nabble.com/Strange-error-message-when-bringing-up-a-CVS-build-td7532679.html
+    isn't even necessary for 2.2.6
+
+[33mcommit d92d837ee458bff7687e4208607e98c5b8e017c2[m
+Author: Godmar Back <godmar@gmail.com>
+Date:   Wed Aug 27 11:50:49 2008 +0000
+
+    cleaned up comments for reboot code and adopted GNU coding standards
+
+[33mcommit cc5c971c3cc498d528a2f74f4dc2f8e27a690311[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Tue Aug 26 03:05:05 2008 +0000
+
+    Reboot when Ctrl+Alt+Del is pressed.
+    
+    Suggested by Anthony Romano.
+    Implementation with assistance from and reviewed by Godmar Back.
+
+[33mcommit 500278652b3d3ec6ba08c150e749b65ca4a5d208[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Mon Aug 25 03:50:49 2008 +0000
+
+    Improve comments.
+    
+    Suggested by Godmar Back.
+
+[33mcommit d88e8f5938d6aae4b58149b259fd485278a83ef9[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Sun Aug 24 17:16:32 2008 +0000
+
+    New option -r to reboot the VM after actions are complete.
+    
+    From Godmar Back, with minor tweaks.
+
+[33mcommit 59f738d500f51ffc5f487344865b8bed69c26281[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Sun Aug 24 04:31:40 2008 +0000
+
+    Use standard POSIX "ustar" format for the scratch disk.
+    
+    This should make it easier to work with scratch disks directly,
+    instead of through the "pintos" script.
+    
+    With naming suggestion from Godmar Back.
+
+[33mcommit 0fd3a243b790dd1cfc9e0a40c57dddde56cf344d[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Sat Aug 23 03:52:54 2008 +0000
+
+    RTC support.
+    
+    Adapted from Anthony Romano's patch with the following changes:
+    
+            * Style adjusted to fit rest of Pintos.
+    
+            * Don't modify the RTC registers.  It shouldn't be necessary.
+              We shouldn't need any initialization in fact.
+    
+            * Drop rtc_set_time stub.
+    
+            * Do handle time advancing while reading the RTC registers in
+              rtc_get_time, using the strategy from Linux.
+    
+            * Fix leap year handling: adding (year / 4) * 24 * 60 * 60 is
+              wrong for first 2 months of a leap year; the test (year & 4)
+              should be (year % 4).
+    
+            * Simplify month code.
+    
+            * Drop enable_rtc_int, disable_rtc_int, rtc_updating that are
+              not needed.
+    
+            * Update documentation.
+
+[33mcommit ed04361f6ec91e4f0db1550c2cc487a461b2d17b[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Sat Aug 23 03:44:32 2008 +0000
+
+    Use macros for 8259A PIC registers, instead of writing them literally.
+    
+    Based on patch from Anthony Romano <chz@vt.edu>, so update authorship
+    information given that Anthony is going to be contributing quite a
+    bit.
+
+[33mcommit 4ae5b30e5eb0be98521235060001c2d6d9828345[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Thu Aug 21 04:49:45 2008 +0000
+
+    Use --build-id=none to avoid build-id sections on FC8.
+    
+    These build-id sections cause the Pintos ELF loader to reject
+    binaries.  The preferred way to eliminate them would be to add
+            /DISCARD/ : { *(.note.gnu.build-id) }
+    to the linker script, but (as reported by Godmar Back) this causes a
+    segmentation fault in ld, as reported in a bug filed at:
+            http://sourceware.org/bugzilla/show_bug.cgi?id=5025
+
+[33mcommit e587ab7ffa2d548029189e540d5716f880932cb1[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Sat Aug 2 11:30:43 2008 +0000
+
+    Fix asm constraints to avoid SI, DI for byte and word access.
+    Thanks to Ed Lyle Karrels <karrels@stanford.edu> for reporting the
+    problem.
+
+[33mcommit 73a641b917fca65bab31677f27ab76b7bb280f3b[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Fri Jul 18 01:13:29 2008 +0000
+
+    Fix bug in --sim and --debug options reported by Bob Lantz.
+
+[33mcommit ecad183eed32dd928ec069dbaf944fa0da83eaa3[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Thu Jul 3 20:10:32 2008 +0000
+
+    Specify rounding for priority calculations.
+    
+    Pointed out by Ed Karrels <karrels@stanford.edu>.
+
+[33mcommit 8a983a2f9697daf07e8fdab3459f0fe99b3d22ad[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Thu Jul 3 19:31:27 2008 +0000
+
+    No longer recommend SourceForge.
+    
+    Really it seems like a bad idea for students.
+
+[33mcommit 5af653aea4f817d41de3d2ab3a9eeaec44016234[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Thu Jul 3 19:30:05 2008 +0000
+
+    Make recent Texinfo accept devel.texi.
+
+[33mcommit 401069bc9a5b60287a21798f8a69c2f1c84dcba7[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Mon Mar 17 11:56:48 2008 +0000
+
+    Wording improvements, from "Valentin I. Spitkovsky"
+    <vspitkovsky@yahoo.com>.
+
+[33mcommit 96d5454f0787f4d190291f823a545a035ccf40c3[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Thu Feb 21 04:25:17 2008 +0000
+
+    Reference to threads/exception.c should be to userprog/exception.c.
+    
+    Thanks to Matt Jones <mkjones@stanford.edu> for reporting this bug.
+
+[33mcommit cd904d16ef888b5001c4509580240c06056b6262[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Thu Feb 14 08:17:14 2008 +0000
+
+    Explain why a null pointer sentinel must be pushed on the stack.
+    From Valentin I. Spitkovsky <vspitkovsky@yahoo.com>.
+
+[33mcommit bbbad85235aaccd0d295e012133bca03918be6e5[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Thu Feb 14 08:12:21 2008 +0000
+
+    Grammar fixes.
+    From Valentin I. Spitkovsky <vspitkovsky@yahoo.com>.
+
+[33mcommit 60208708f25db2a66d7ccbe47af83b04da459fdb[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Sat Jan 26 16:43:15 2008 +0000
+
+    Use -fno-stack-protector with GCC versions that support it, to fix a
+    linker error on platform on which -fstack-protector is default, such
+    as recent versions of Ubuntu.
+
+[33mcommit 39c5bd8a28cc4f2e95f5380439a521e57b53ffbf[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Thu Jan 24 18:49:45 2008 +0000
+
+    Fix typos.
+    
+    Reported by Valentin I. Spitkovsky <vspitkovsky@yahoo.com>.
+
+[33mcommit 18be77ca58ad1a721161bbd277a02d78828689c8[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Thu Jan 24 18:48:41 2008 +0000
+
+    Fix reversal of "acquire" and "release" in Locks section.
+    
+    Reported by Valentin I. Spitkovsky <vspitkovsky@yahoo.com>.
+
+[33mcommit 8bc47e15da36b072924f8281688ea92935ae1c18[m
+Author: Godmar Back <godmar@gmail.com>
+Date:   Wed Jan 9 19:48:05 2008 +0000
+
+    - moved all instructions that related to local CVS/group setup in localcvsinstructions.texi
+    - added variables recommendsourceforge, recommendvnc, and recommendcygwin to include/exclude
+      recommendations to use sourceforge, VNC, and Cygwin, resp.
+
+[33mcommit d158a7cd545fa8dd35dba91935029465eedff0da[m
+Author: Godmar Back <godmar@gmail.com>
+Date:   Sat Nov 17 09:42:26 2007 +0000
+
+    - add localsettings.texi which contains Stanford-local macros and variables
+    - threads.texi - removed comment about being welcome to implement priority donation for semaphores
+    - vm.texi - added FAQ about how to resume.  It truely is a FAQ, at least here at Tech.
+    - debug.texi - updated Bochs build instructions
+
+[33mcommit 594421de07283cdf4cce7226eb2c468c7ea2fedd[m
+Author: Godmar Back <godmar@gmail.com>
+Date:   Fri Nov 16 02:18:35 2007 +0000
+
+    added IGNORE_USER_FAULTS clause to match specification
+
+[33mcommit b47827fe69fdc8e486c91e094765cd94f3070086[m
+Author: Godmar Back <godmar@gmail.com>
+Date:   Sun Sep 23 15:40:23 2007 +0000
+
+    fixed typo: "pass" should be "fail"
+
+[33mcommit 567a7ff2266279b928b7fdd6ccba642e61856d88[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Fri May 18 23:23:51 2007 +0000
+
+    Clean some more files.
+
+[33mcommit 858bd7243d49b700e6390a02dd885199607ea80f[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Mon May 7 23:02:07 2007 +0000
+
+    Fix warning.
+
+[33mcommit 9a602e952252dbfb1332f5137dd7c33a21b6fc6d[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Mon Apr 23 00:05:33 2007 +0000
+
+    Correctly initialize the esp0 pointer in the TSS for the initial
+    kernel thread.  Shouldn't actually matter in practice, because that
+    pointer is only used on a user->kernel transition, and the initial
+    kernel thread never runs a user process.
+    
+    Reported by Godmar Back.
+
+[33mcommit e48bfc15bb4241e1df3b32d8e4aca6a34efea6c3[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Mon Apr 2 08:10:25 2007 +0000
+
+    Ignore tags and cscope files.
+
+[33mcommit b0c619871eee10551a0d510b67ee3a2493088341[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Mon Apr 2 07:23:22 2007 +0000
+
+    Improve comment on thread_unblock().
+    Suggested by Godmar Back.
+
+[33mcommit 07fcf217b9e63854cc524f903f9ffe1c83ea7ac5[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Sat Mar 31 14:40:52 2007 +0000
+
+    Fix bugs in -j and -r options reported by Godmar Back.
+
+[33mcommit eae29259cd81d3d2e1426eb9a3f9c47eb06d0a88[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Sat Mar 31 14:40:29 2007 +0000
+
+    Fix bug in jitter reported by Godmar Back (BIOS wouldn't finish
+    initializing).
+
+[33mcommit d4711f749a61550fc1e64e2f78af1e8827b92de3[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Sat Mar 31 14:12:03 2007 +0000
+
+    Fix specification of "write" system call to match the file system
+    implementation and the tests.
+
+[33mcommit 41c6d30ad899676a4362bc1a18fca3d7c3eb3c49[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Sat Mar 31 13:49:21 2007 +0000
+
+    Describe cscope.
+
+[33mcommit 1f33cb3712251da36c9af3d2f11f5a3c1a4441a4[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Sat Mar 31 12:26:45 2007 +0000
+
+    Delete question about pwd.c program, as agreed with Godmar earlier.
+
+[33mcommit f4cc922385a449eca5367e5cea584ded54936648[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Sat Mar 24 01:26:18 2007 +0000
+
+    Improve wording.
+    From Godmar Back.
+
+[33mcommit d26c924c8cd947e91bd4f5e8d0b7f74d3460d22b[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Sat Mar 24 01:12:10 2007 +0000
+
+    Explain the semantics of exec in more detail.
+    From Godmar Back.
+
+[33mcommit 10331698d6d43cf1bb07248d832e93b7d1170567[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Sat Mar 24 01:04:19 2007 +0000
+
+    Add helpful comment.
+    From Godmar Back.
+
+[33mcommit 2fd2a77d68a903503a7a83387926e0528e693b41[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Sat Mar 24 01:02:19 2007 +0000
+
+    Add "cscope" target.
+
+[33mcommit 13bc50213bc87981f67ceabd7a623e05917fd09d[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Sat Mar 24 01:01:06 2007 +0000
+
+    Rename execute_thread() to start_process().
+    Thanks to Godmar Back for pointing out that it could be better named.
+
+[33mcommit 854aa042a0e960f142cb15ecca8177ee01c3f927[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Sat Mar 24 00:56:57 2007 +0000
+
+    Clarify that create and remove work on files, not on file descriptors.
+    Thanks to Godmar Back for pointing out the need.
+
+[33mcommit 127ad6d1d303bf93142a4b951ac08f136e4646e5[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Thu Mar 8 03:56:24 2007 +0000
+
+    Fix bug in *-persistence tests when prerequisites fail.
+    Reported by Tanvi Vyas <tanvi@stanford.edu>.
+
+[33mcommit a4a330725f78a769e6592edffdf5627e8d1d7623[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Wed Mar 7 14:52:06 2007 +0000
+
+    Fix inconstiency in recent_cpu update description.
+
+[33mcommit 549e11aeae62a517eb513c6dc1e3e267b8293781[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Sun Feb 11 04:45:07 2007 +0000
+
+    Fix typo.
+
+[33mcommit 03f3426d4da28916900a7b811e72b862c5411d0d[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Sun Feb 11 04:44:25 2007 +0000
+
+    Clarify description of "wait" syscall.  Thanks to Evan Kutter
+    <ejk@stanford.edu> for describing the issue.
+
+[33mcommit 695e26795ff43edb514abd99e566d1eee32194d6[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Tue Feb 6 21:09:10 2007 +0000
+
+    Improve example for "Can a thread's priority change while it is on the
+    ready queue?" FAQ.  From Godmar Back.
+
+[33mcommit 386e9fe63fef23415cc41bb325b1f19eb3d8184c[m
+Author: Godmar Back <godmar@gmail.com>
+Date:   Tue Feb 6 06:44:01 2007 +0000
+
+    added patch to make bochs work with gdb 6.5
+
+[33mcommit aa5413391cffb2c4d59c37730c5d4e0f09ebfe7b[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Sun Jan 28 04:21:55 2007 +0000
+
+    Fix order of checks on load average.
+    From a CS140 student, via Ben Sapp.
+
+[33mcommit 2886710fa362574f5ce483ee9c8e573ab3afc000[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Sun Jan 21 10:29:26 2007 +0000
+
+    Add i86pc to unames detected as x86 (used by Solaris).
+    From Michael Gregory <mpgreg@stanford.edu>.
+
+[33mcommit 51352183b5bd8c3671c24d927f5c69ab7ea04e83[m
+Author: Godmar Back <godmar@gmail.com>
+Date:   Sat Jan 13 14:39:41 2007 +0000
+
+    fixed grammar/typo
+
+[33mcommit 4b24a90c8f8a3df1e226237a72b6bce166c28e7c[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Thu Jan 11 08:02:13 2007 +0000
+
+    Set VERBOSE to empty string by default, which prevents an environment
+    variable named VERBOSE from causing trouble but still allows it to be
+    overridden by the user on the command line.  (Some of the Stanford
+    machines set VERBOSE=yes in the environment by default on log-in.)
+
+[33mcommit 93506894d5794e8c5e49f4600d5a51e3ad8092d7[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Thu Jan 11 07:48:07 2007 +0000
+
+    Remove unnecessary semicolon that gives GNU make 3.80 fits.
+
+[33mcommit 38e1ff2edf63096a8ce642cc727564074cdc7740[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Thu Jan 11 06:57:40 2007 +0000
+
+    Don't call bx_gdbstub_exception when we're not compiling the gdb stub.
+    Thanks to Godmar Back for pointing this out.
+
+[33mcommit a43de5270109e60db2284c929a368b083e1ff316[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Tue Jan 9 17:46:42 2007 +0000
+
+    Add -MF to GCC invocation to make ccache happy on Fedora Core 6.
+
+[33mcommit 3f08530b1f8640d3fdc05477e44d0e81c0199ed3[m
+Author: Godmar Back <godmar@gmail.com>
+Date:   Mon Jan 8 09:55:17 2007 +0000
+
+    clarified stack limit issue and removed comment about first instruction faulting in stack page
+
+[33mcommit 90053831bfef7cfa230cae40301f387ed213718c[m
+Author: Godmar Back <godmar@gmail.com>
+Date:   Mon Jan 8 08:46:49 2007 +0000
+
+    - removed @ref to "printf Reboots" since this no longer applies and the @anchor is gone
+    - fixed typo print -> printf
+
+[33mcommit a36a980e3df79c1d75c7ebedd8cb85cfe01d0795[m
+Author: Godmar Back <godmar@gmail.com>
+Date:   Mon Jan 8 06:11:37 2007 +0000
+
+    adjusted scores for P4 as discussed
+
+[33mcommit 0b01eb8d16b9ff48657aceec17d68522b2a3cfdf[m
+Author: Godmar Back <godmar@gmail.com>
+Date:   Sun Jan 7 21:38:02 2007 +0000
+
+    Cosmetic fix: make first column wider to account for longer names in p4.
+
+[33mcommit 5aede12cbaae26a13df4e2b926c78ed85945dbad[m
+Author: Godmar Back <godmar@gmail.com>
+Date:   Sun Jan 7 20:55:28 2007 +0000
+
+    - adjustments to scores for P3 as discussed.
+    - increased problem size for page-* tests to force eviction
+
+[33mcommit cabab297e140981add0d8b3f965dadd579224a29[m
+Author: Godmar Back <godmar@gmail.com>
+Date:   Sun Jan 7 20:54:54 2007 +0000
+
+    adjustments to scores for P2 as discussed.
+
+[33mcommit 0eb663f85c834786c5b98186bb55a3e3224b8a2f[m
+Author: Godmar Back <godmar@gmail.com>
+Date:   Sat Jan 6 19:00:52 2007 +0000
+
+    - added priority-donate-chain test which tests 8-level deep nested donation
+    - adjusted weights for P1 Grading file
+
+[33mcommit cc41c0acfbda000cb416b3492bc8de3480b62904[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Thu Jan 4 15:13:49 2007 +0000
+
+    Separate persistence tests from the extended filesys tests.
+    Suggested by Godmar Back.
+
+[33mcommit 7eb9f6e1fa81807ee7cc381047077f8ff98d1d68[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Thu Jan 4 14:19:25 2007 +0000
+
+    New page-merge-mm, page-merge-stk tests.
+    Thanks to Godmar Back for suggestion.
+
+[33mcommit e73c27897259e2c4fb340406f01491278134803a[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Mon Dec 18 18:33:52 2006 +0000
+
+    Make comment more readable.
+
+[33mcommit 4d5eab7492d4e8e45c3c8c76de2d7339cac07b75[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Fri Dec 15 19:40:03 2006 +0000
+
+    Fix expected output.
+
+[33mcommit fd07e00cb7d16cf60ed8801997663a8197c5e317[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Fri Dec 15 14:58:10 2006 +0000
+
+    Don't require distinguishing data and metadata for caching.
+    
+    Another suggestion for implementation order.
+    
+    From Godmar.
+
+[33mcommit c00f7a66b5c2352cddc3db336731bab3a8faa1ba[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Fri Dec 15 14:24:48 2006 +0000
+
+    Fix comment.
+
+[33mcommit ad711b00de76e004c0240fff288cd734eb1f1492[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Fri Dec 15 14:21:04 2006 +0000
+
+    When printing a directory tree, indicate explicitly if it's empty.
+
+[33mcommit 53a7f5d0952a4595f252247f5ee3d017468eb57e[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Mon Dec 11 20:40:20 2006 +0000
+
+    Parse command-line options much earlier, so that thread_mlfqs is
+    initialized before thread_init() gets hold of it.
+    
+    Also allow console output much earlier, by doing initialization
+    whenever we call into it first and by only trying to take the console
+    lock after threads have been initialized.
+    
+    Don't try to take the console lock after the kernel panics, to avoid
+    getting nailed so hard by bugs in lock_acquire().
+    
+    Suggested by Godmar Back.
+
+[33mcommit e5439c03526c8e2881b0430ddbfe02812bee2e68[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Fri Dec 8 23:40:23 2006 +0000
+
+    New target to generate cscope.files.
+
+[33mcommit 0951a7af1bd8e78b5991edd7de9d0370b2d2d72b[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Fri Dec 8 18:47:37 2006 +0000
+
+    Make it possible to ignore page faults in GDB.
+    From su.class.cs140 and Godmar Back.
+
+[33mcommit cd61e4747c8d597c302f0ef3f1b0a2b6ed5ce890[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Fri Dec 8 16:06:31 2006 +0000
+
+    Revert the bitmap randomization change, which had the side effect of
+    causing enough disk fragmentation for the base (extent-based) file
+    system that in some cases tests would fail.  Also, it confused the
+    hell out of everyone.  Failed experiment.
+
+[33mcommit 8008245440011d25307535c3bb6757eb72ae5abe[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Fri Dec 8 15:39:32 2006 +0000
+
+    When reading files out of the scratch disk, don't die with an error
+    exit code if there's a bad signature, because that's a guest error not
+    a host error.  (If we do exit with an error code, it fouls up the
+    grading process.)  Instead, just make sure that the host file(s) we
+    were supposed to retrieve is unlinked.
+
+[33mcommit f76b6130c127c5ff3cbb1dc15afbc68a2518edb7[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Fri Dec 8 15:29:58 2006 +0000
+
+    Fix error message when archive fails to open.
+
+[33mcommit 96c09fa4bb8540dbf412be81e6ec015584e04f97[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Fri Dec 8 14:58:02 2006 +0000
+
+    Explain that multiple file descriptors for a single file are
+    independent.
+    From Godmar Back.
+
+[33mcommit c9667cc796f96017951f8ac90978846918c184d7[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Fri Dec 8 14:52:37 2006 +0000
+
+    Note that struct file, struct dir are per-thread.
+    From Godmar Back.
+
+[33mcommit 4a752bf7804cd029b426979f0876d15a678f6471[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Fri Dec 8 14:48:20 2006 +0000
+
+    Add Project 4 Suggested Order of Implementation section,
+    from slides written by Godmar Back.
+
+[33mcommit ccbd8543c5ad589e878a3924b2dd39d5a6a2f39d[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Fri Dec 8 14:35:09 2006 +0000
+
+    Explain better what we expect from the buffer cache.
+
+[33mcommit 8c839323e2f1c3f6243cdc49ceffed7483368447[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Mon Dec 4 19:14:26 2006 +0000
+
+    Use mkdir, not create.
+    Thanks to "Yuriy" for reporting this bug.
+
+[33mcommit cf90ac565e9533a17c5d4edff1e250a312396184[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Tue Nov 21 13:04:33 2006 +0000
+
+    Clarify condition on BUF_SIZE in monitor example.
+    Thanks to Terje Mathiesen for pointing out this issue.
+
+[33mcommit 922af9ed1bd72fbf4a4c77ab6ddde78a7b6c3e97[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Sat Nov 11 14:44:42 2006 +0000
+
+    Add comment.
+
+[33mcommit eb5c6a0f64ab2b0a9efa853fa0ef53822af80047[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Sat Nov 11 14:43:15 2006 +0000
+
+    Drop use of volatile in favor of explicit memory barriers.
+    Document this use of barriers.
+
+[33mcommit 9ae0ea8865c32bac7f2cfd891dc9c9d8fad0a7a8[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Sat Nov 11 14:41:59 2006 +0000
+
+    Also verify that running "make clean" deletes all the files in the
+    build directory except for the Makefile itself.
+
+[33mcommit 3146439436229fe48e325caa9a140d05d8ac2897[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Sat Nov 11 14:30:18 2006 +0000
+
+    Clean tests/vm/zeros.
+
+[33mcommit 1c765c09e567d3da51d5249932daa71f8a74ff9d[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Sat Nov 11 14:29:14 2006 +0000
+
+    Adopt consistent style in asm statements.
+
+[33mcommit 49c19e58aa14fba779bfe331b1ebaba62d31dfa5[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Sat Nov 11 14:25:16 2006 +0000
+
+    Add memory clobbers to several asm statements,
+    to prevent reordering.
+
+[33mcommit 2ce1eb4d6c0adc209f56789920362d455cca443e[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Sat Nov 11 14:19:40 2006 +0000
+
+    Make sure loops_per_tick doesn't overflow to zero.
+
+[33mcommit b9fefe5e8d7d37e23970070a4614a5d1a6692eb2[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Fri Nov 10 16:53:21 2006 +0000
+
+    Also clean results, grade.
+
+[33mcommit 6d19139b337fcb7c9b31e5b6724e6ae19499e4c5[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Fri Nov 10 15:51:03 2006 +0000
+
+    Add "memory" as clobber to the asm used by barrier().
+    Otherwise at least some versions of GCC assume that no changes to
+    memory can take place.
+
+[33mcommit 0b55933faeb90e4953f33a7e382c6f475d9befd7[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Fri Nov 10 15:31:18 2006 +0000
+
+    Also clean bochsout.txt, bochsrc.txt.
+
+[33mcommit ccf52d99d27e8dd88e594809d3ab7aab1efc8b8b[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Fri Nov 10 15:06:15 2006 +0000
+
+    Minor style updates.
+
+[33mcommit 2f9044505b2103fb0f165341fcbeb3104289572e[m
+Author: Godmar Back <godmar@gmail.com>
+Date:   Fri Nov 10 04:36:14 2006 +0000
+
+    Rewrite of multi-oom.  Now descends 10 times and expects to reach the same
+    depth every time.  In addition, fires off some children that consume resources
+    and then crash.  Much more difficult than before.
+
+[33mcommit 36beb03eba5009ca7054a9b32b966bf211e839b8[m
+Author: Godmar Back <godmar@gmail.com>
+Date:   Fri Nov 10 04:34:20 2006 +0000
+
+    - when ignoring exit codes, ignore exit(-1) also (previously didn't allow '-')
+
+[33mcommit db7d1db11685c1dc0d97c41049d26b876211551b[m
+Author: Godmar Back <godmar@gmail.com>
+Date:   Fri Nov 10 02:20:08 2006 +0000
+
+    make loop counter volatile to prevent gcc4.1 from optimizing away entire loop body
+
+[33mcommit d6d7ad6b1cf3a6f08b89ef90a0ad9d68bb86888c[m
+Author: Godmar Back <godmar@gmail.com>
+Date:   Fri Nov 10 02:18:07 2006 +0000
+
+    added accidentally omitted $ to make operand immediate
+
+[33mcommit a96d2712f349629d7fe2186e2620f1704cbdee50[m
+Author: Godmar Back <godmar@gmail.com>
+Date:   Sat Nov 4 20:08:27 2006 +0000
+
+    clarify use of timer_sleep or acceptable alternatives for implementing
+    write-behind cache flushing.
+
+[33mcommit 6ae5cde69b8ce2ec34771424c1d7ece7069ec976[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Fri Nov 3 03:07:56 2006 +0000
+
+    Clarify purpose and rationale.
+    From Godmar Back.
+
+[33mcommit ef0f93908b437a4a9df4f422fe2e4844514011db[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Fri Nov 3 02:54:48 2006 +0000
+
+    Remove O_EXCL from flags used to create files to be copied out of a
+    Pintos scratch disk, in get_scratch_file.
+    Thanks to Godmar Back for pointing out the problem.
+
+[33mcommit b13a0f40a52b47d3ceea92887adc9543c1d94aed[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Fri Nov 3 02:50:36 2006 +0000
+
+    Delete .tar, .get-output, and .get-errors files on "clean" target.
+    Thanks to Godmar Back for pointing out the problem.
+
+[33mcommit ab1373d2af34ff0a0b352162cf5a3115c70e3732[m
+Author: Godmar Back <godmar@gmail.com>
+Date:   Wed Nov 1 21:20:52 2006 +0000
+
+    added IGNORE_USER_FAULTS flag - so students may report failed stack growth
+
+[33mcommit 111f774134415bb8da9b3882175603f2693026d9[m
+Author: Godmar Back <godmar@gmail.com>
+Date:   Wed Nov 1 00:00:42 2006 +0000
+
+    corrected wrong statement about content of f->esp when page fault
+    occurs in kernel mode.  See [IA32-v3a], figure 5.4 in section 5.12.1.1.
+
+[33mcommit 8d5f8c112280d6e9eee7da93326ff64b72145963[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Sat Oct 7 19:01:09 2006 +0000
+
+    Improve comment.
+
+[33mcommit 8a40154ad529f4c3d15068b3b3103197fb896add[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Thu Oct 5 03:07:31 2006 +0000
+
+    Sleep until recent_cpu actually decays.
+
+[33mcommit d4def0ac6ef072cf0cf8a968784bc21371bd4d58[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Thu Oct 5 03:05:40 2006 +0000
+
+    Add hints about not doing too much work in timer interrupt.
+
+[33mcommit f0563386a8c672a1460473b0b4b175e74eaf5c5c[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Thu Oct 5 02:20:10 2006 +0000
+
+    Fix message.
+    From Godmar Back.
+
+[33mcommit f40f5e8a6f70b12b8e0848f1d1484725c142f840[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Thu Oct 5 01:25:38 2006 +0000
+
+    When out of memory+swap, just panic the kernel.
+
+[33mcommit 2dc702a30822c4773989f3bf5bc730848c0f473c[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Thu Oct 5 01:14:14 2006 +0000
+
+    Add -O to CFLAGS to try to catch uninitialized variable errors.
+
+[33mcommit c4d3a0df42588f919931e786d398e418b6ce6179[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Thu Oct 5 00:44:09 2006 +0000
+
+    Make Pintos able to build with "gcc -m32" on x86-64 hosts without the
+    need for the host to have any 32-bit libraries (specifically, without
+    needing libgcc).
+
+[33mcommit b492098dbb2bd50aef4104bcef418ba53f30a4eb[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Tue Oct 3 09:41:00 2006 +0000
+
+    Fix logarithms.
+    Thanks to Haobo Xu <haoboxu@stanford.edu>.
+
+[33mcommit 2e8d8e1e1d4aa9c90b78c6d40bc315dd4e5270b9[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Thu Sep 28 17:45:27 2006 +0000
+
+    Irq 7 is special.  It is not just the parallel port.  It can also be a
+    "spurious" irq, one that is not associated with any particular device.
+    Real hardware can generate spurious irqs for various reasons (try
+    Google for details), but it never occurred to me that simulated
+    hardware would ever do so.
+    
+    However, it can, at least under Bochs.  Pintos programs the PIT to
+    interrupt at 100 Hz.  The PIT does so by generating a output signal
+    that stays high most of the time but drops low for a single clock
+    cycle 100 times per second.  The low-to-high transition causes the
+    timer interrupt.
+    
+    The problem occurs when we've been doing work with interrupts
+    disabled, causing a timer interrupt to be delayed.  If we enable
+    interrupts on the same clock cycle as the PIT's high-to-low
+    transition, we will still get an interrupt, because the interrupt
+    controller latched the presence of an interrupt.  However, when the
+    CPU attempts to determine the irq number, the interrupt controller
+    sees that all of its incoming interrupt lines are low.  Thus, it
+    reports irq 7 to the CPU, and we end up with an interrupt 0x27.
+    
+    It doesn't happen very often, because there's only a 1-cycle window,
+    and it requires that we do a good deal of work with interrupts off,
+    and it can only happen if no other interrupts (e.g. serial) are
+    pending.  But it's darned annoying when it happens.
+    
+    Here's a filtered excerpt from a Bochs log with debugging enabled
+    where you can see the problem.  The first interrupt (32 or 0x20) is
+    properly a timer interrupt, because irq line 0 is high.  The second
+    interrupt (39 or 0x27) is the spurious one; you can see that irq line
+    0 went low on the same cycle.
+    
+    00080033515d[PIC  ] IRQ line 4 now low
+    00080033827d[PIC  ] IRQ line 4 now high
+    00080033970d[PIC  ] IRQ line 0 now low
+    00080033971d[PIC  ] IRQ line 0 now high
+    00080033989d[PIC  ] IRQ line 4 now low
+    00080034068d[CPU  ] interrupt(): vector = 32, INT = 0, EXT = 1
+    00080043970d[PIC  ] IRQ line 0 now low
+    00080043971d[PIC  ] IRQ line 0 now high
+    00080053971d[PIC  ] IRQ line 0 now low
+    00080053971d[PIC  ] IRQ line 0 now high
+    00080063971d[PIC  ] IRQ line 0 now low
+    00080063972d[PIC  ] IRQ line 0 now high
+    00080073971d[PIC  ] IRQ line 0 now low
+    00080073972d[PIC  ] IRQ line 0 now high
+    00080083971d[PIC  ] IRQ line 0 now low
+    00080083971d[CPU  ] interrupt(): vector = 39, INT = 0, EXT = 1
+    00080083972d[PIC  ] IRQ line 0 now high
+    00080084538d[PIC  ] IRQ line 4 now high
+    
+    This change causes irqs 7 and 15 (0x27 and 0x2f) to be ignored when no
+    handler is provided.
+    
+    Problem reported by Godmar Back.
+
+[33mcommit 9b71820d82e2a9e96ab57165861592b2d74e92e5[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Thu Sep 28 13:11:52 2006 +0000
+
+    Update.
+
+[33mcommit 2ca95dc97c9dd591d0f71f1f4c411b3aeb82d690[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Thu Sep 28 12:59:05 2006 +0000
+
+    Minor doc improvements.
+    From Godmar Back.
+
+[33mcommit f294e7e618e110f8203ea7cf800acb2e1334774b[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Thu Sep 28 12:36:41 2006 +0000
+
+    Make list_entry, hash_entry more type-safe.
+    Suggestion from Godmar Back.
+
+[33mcommit 13177c92575c4e0ddc1ca1600b24f5058e349bd3[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Thu Sep 28 12:15:11 2006 +0000
+
+    Fix confusing spacing in example
+
+[33mcommit 689fb08ce1061297cec4264aeb32464ec182fcf3[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Tue Sep 26 15:12:05 2006 +0000
+
+    Create idle thread with minimum priority.
+    Suggested by Godmar Back.
+
+[33mcommit f35d56069db7eb1bc09f48f7f40a594718611f95[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Tue Sep 26 14:59:41 2006 +0000
+
+    Change "Memory Barriers" to "Optimization Barriers".
+    Thanks to Joshua Haberman for pointing out the issue.
+
+[33mcommit 6f7be4d89547dd7f9801f518e52572046a113daf[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Mon Sep 25 21:43:09 2006 +0000
+
+    Move assignment to _end_kernel_text inside .rodata.
+    
+    Without this change, any orphan, read-only sections (such as .eh_frame
+    from libgcc) will be placed by GNU ld between .rodata and
+    _end_kernel_text.  The result is that _end_kernel_text gets pushed
+    into the middle of a page that now contains some read-only and some
+    read/write data.  After paging_init() marks that page read-only, the
+    first write to it (in intr_init() in my case) causes Pintos to go
+    ka-boom!
+    
+    With this change, orphan read-only sections just don't get marked
+    read-only in the page tables.  Big deal.
+
+[33mcommit d4c30c6a386fe850e7eed1025e459fbc82a0b6e2[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Mon Sep 25 20:26:35 2006 +0000
+
+    Fix two bugs in the base Pintos code:
+    
+    1. Idle thread doesn't get initialized well: it hangs around on the
+       ready list until we have idle time.  Fix by using a semaphore to
+       make sure the idle thread gets initialized.
+    
+    2. After idle thread does get initialized, it can get put back on the
+       ready list if you yield from the timer interrupt.  Fix by not ever
+       putting the idle thread on the ready list.
+    
+    Plus fix a bug in the sample solution that tends to mask #2:
+    
+    3. Doesn't yield from timer interrupt when unblocking a thread.  Fix
+       by yielding from timer interrupt when unblocking a thread (of
+       higher priority).
+    
+    Also, fix something that confused students:
+    
+    4. Rename enable_mlfqs to thread_mlfqs and move it to thread.c (to
+       reduce confusion about where it is declared), and heavily comment
+       to ensure that students know when it gets initialized.
+    
+    These problems were drawn to my attention by Godmar Back.  Thanks!
+
+[33mcommit 17102846d22591590c37548f8514067e2be6c5f6[m
+Author: Godmar Back <godmar@gmail.com>
+Date:   Wed Sep 13 11:40:40 2006 +0000
+
+    fixed left-over, now-wrong comment about how decrease in numeric priority means increase in effective priority
+
+[33mcommit 04b1db625129936325474664d7f400b9993e9611[m
+Author: Godmar Back <godmar@gmail.com>
+Date:   Tue Sep 12 02:32:27 2006 +0000
+
+    fixed typo in wrong iterator example
+
+[33mcommit 2b4b1acd2d80945294b8786396251857005c0a81[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Sat Sep 9 16:53:56 2006 +0000
+
+    Fix issue reported by Godmar Back:
+    
+        I may have found a problem with the triple fault patch, though I don't
+        know how to solve it.
+        If you add a *(int *)0=42 right after paging_init(), but before
+        intr_init(), gdb will just hang:
+    
+    ...
+    
+        where it hangs while Pintos prints:
+    
+        Triple fault: stopping for gdb
+        Triple fault: stopping for gdb
+        Triple fault: stopping for gdb
+        Triple fault: stopping for gdb
+        Triple fault: stopping for gdb
+        Triple fault: stopping for gdb
+        Triple fault: stopping for gdb
+        Triple fault: stopping for gdb
+        Triple fault: stopping for gdb
+        Triple fault: stopping for gdb
+        Triple fault: stopping for gdb
+        etc.
+    
+        It stops properly if I don't next-step (that is, if I just let it run.)
+
+[33mcommit 96890516ba515537cae2d4b87df7412f5ad8c73f[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Sat Sep 9 16:52:39 2006 +0000
+
+    Convert tabs to spaces to make cut-and-paste to interactive shell
+    work.
+
+[33mcommit e1289bf52f9dbc8da311fe2064af85076edf82b1[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Fri Sep 8 00:51:17 2006 +0000
+
+    Make kernel code pages read-only.
+    From Godmar Back, with changes.
+
+[33mcommit 4879d73c341778a907b777da3a6a15a131c5a913[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Fri Sep 8 00:50:31 2006 +0000
+
+    Clarify summary section.
+
+[33mcommit cf6f97138af7627600523c6d2de571c379667771[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Sun Aug 20 21:38:16 2006 +0000
+
+    Change several "die"s to "fail"s in read_tar.
+    Reported by Haobo Xu <haoboxu@stanford.edu>.
+
+[33mcommit 0f20d665200751471df242f1ff8a12f911189c23[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Fri Aug 18 16:48:47 2006 +0000
+
+    B5: Include "open by a process" as a reason to disallow removing a
+    directory.
+
+[33mcommit d115fdd6be51fae8bc292545fd303c0a882cf84e[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Thu Aug 17 18:27:07 2006 +0000
+
+    Minor wording improvement.
+
+[33mcommit 1d5faa37e50168451e815ab2c40b215a62485b07[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Thu Aug 17 17:23:38 2006 +0000
+
+    A2: We want to see the work in the calculation, not just the final
+    result.
+
+[33mcommit 2b4cbbd50d1752a6b26341ba78e7e285f7b947f3[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Thu Aug 17 17:09:14 2006 +0000
+
+    May also consult course staff.
+
+[33mcommit e2aa2d3805fac3ab74165d9fee54539302c58fbe[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Thu Aug 17 16:47:41 2006 +0000
+
+    make_tar_archive() needs to initialize `success'.
+    Thanks to "Morgan" <theatomicbob@excite.com> for reporting this bug.
+
+[33mcommit d99c5225d220e7ff436491d6bd1909a04117141f[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Fri Aug 4 20:46:26 2006 +0000
+
+    Clarify length.
+
+[33mcommit 7e6a3b090ec08077b399dab89437073b144c69d8[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Sun Jul 23 21:56:44 2006 +0000
+
+    Fix comment.
+
+[33mcommit 4aef5aa2e21ef46c7fcfe03f81b8dd8c60c64286[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Sun Jul 23 21:53:47 2006 +0000
+
+    Fix comment.
+
+[33mcommit de76134e7b5d21ba0551657bbfc0dbb24e3c2312[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Fri Jul 21 02:05:37 2006 +0000
+
+    Improve comment on sema_down.
+    Thanks to Haobo Xu for pointing this out.
+
+[33mcommit d4067a3abb1ef4537030835952e32f22f0063529[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Fri Jul 21 00:56:03 2006 +0000
+
+    Add an identifier to each question in the design document templates,
+    so that they are easier to refer to individually.
+
+[33mcommit bb2ad624fa17035477be68c1f6b89710f2124b7a[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Sun Jul 9 17:55:06 2006 +0000
+
+    Add a label for each question.
+
+[33mcommit 5ae9e9b8e9240f8605cd4ed7ddf9c1207370dd35[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Sun Jul 9 15:10:00 2006 +0000
+
+    Fix typo.
+
+[33mcommit 2e9f1eca8738a888033e4be9f661da9734e130e9[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Sat Jul 8 18:56:36 2006 +0000
+
+    "woken up" => "awakened"
+
+[33mcommit bd2784aef647e8bbbd13eca1ed237e383015c874[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Sat Jul 8 18:15:14 2006 +0000
+
+    Add additional explanation to the spontaneous reboot output.
+
+[33mcommit 19b8a41c7b8fb31d908b782e8607c04449066ad0[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Fri Jul 7 20:54:50 2006 +0000
+
+    Make requirements consistent with doc template wording.
+
+[33mcommit 51878ce2ad4922e38f3e3c84a2108e18ec9e5517[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Fri Jul 7 18:53:30 2006 +0000
+
+    Point out that all_list and all_elem don't exist in the tree we provide.
+
+[33mcommit 0c6f5592b956c6a5c11c3b422e523d961f8afa45[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Fri Jul 7 01:52:28 2006 +0000
+
+    New FAQ.
+
+[33mcommit fadbce2938abee96b8a80734b2ead5bbfc9491bc[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Fri Jul 7 01:14:13 2006 +0000
+
+    Fix summary.
+    Thanks to Samanth Lingampalli <samanthl@stanford.edu> and Haobo Xu
+    <haoboxu@stanford.edu> for input.
+
+[33mcommit 2f3fdb6288cc53ed556319c0c8d9845165f2f0b9[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Sun Jul 2 16:52:58 2006 +0000
+
+    Don't say that the design doc itself is 50% of the grade.
+
+[33mcommit 2de6c3a98848de085ca065b42b4e3df9741345ac[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Fri Jun 30 00:51:42 2006 +0000
+
+    Use test -f because Solaris sh does not support -e.
+    (Idiots can't read POSIX spec I guess.)
+
+[33mcommit 82281a670902d91868eb968db65a8c0dc9b4e502[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Mon Jun 19 21:52:52 2006 +0000
+
+    Recommend zcat piping into tar x, instead of tar xzf, because some of
+    the Leland machines don't have GNU tar and thus don't support "z".
+
+[33mcommit 9750868b9c1fc53f2ac25bd7fe0f6152cc55ff03[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Mon Jun 19 21:50:53 2006 +0000
+
+    Allow user fault messages in output in bad-* tests.
+    Add "pass;" at end of each bad-* test checker script.
+
+[33mcommit 7bdfa163281617e45add7058dfb9b1a27d064a1f[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Thu Jun 15 00:59:18 2006 +0000
+
+    @ need to be escaped.
+
+[33mcommit fc645de2c1499c0069ba0bb76240a5d93c94717b[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Wed Jun 14 16:00:20 2006 +0000
+
+    Add some comments.
+    From chris@seberino.org.
+
+[33mcommit e928b6a40e8bd2ef7cd5c033ba59939c7396088b[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Sun Jun 11 16:53:09 2006 +0000
+
+    Point out that the tarball does not include the doc directory.
+    From chris@seberino.org.
+
+[33mcommit fd24c2387f5cf1b802e885c7430ba1f1bb852e13[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Sat Jun 10 20:09:25 2006 +0000
+
+    Capitalize QEMU properly.
+    From chris@seberino.org.
+
+[33mcommit 1f197c6861841bc0c27327c20b85e7b43b65affe[m
+Author: Godmar Back <godmar@gmail.com>
+Date:   Wed Jun 7 22:09:19 2006 +0000
+
+    added bad-jump/read/write bad-jump2/read2/write2 to check that process
+    that attempt to execute/read/write NULL or a kernel address, resp., are
+    properly terminated.
+
+[33mcommit bd18aa4d5b565826e29ccfcaa0eb2cf689cae96c[m
+Author: Godmar Back <godmar@gmail.com>
+Date:   Tue Jun 6 12:48:38 2006 +0000
+
+    defined 'test_name' for msg()/vmsg() to work properly
+
+[33mcommit 4dbef14e57eebfd86079fcc2185adc33e72e2d8b[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Fri Jun 2 22:13:31 2006 +0000
+
+    Make quoting consistent.
+
+[33mcommit 5a63c2f04edb9e892275a9ef184878be19cf5ebd[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Fri Jun 2 22:10:36 2006 +0000
+
+    Point to installation instructions.
+
+[33mcommit 2a7028b32e0b34edc8d3d570af1d0d810bea36b4[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Fri Jun 2 22:06:51 2006 +0000
+
+    Replace GSX Server support with VMware Player support.
+    Fully support serial terminal with Player.
+
+[33mcommit 392931f3f604f0c8ceb7d97dba21c7fefa2a2187[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Thu Jun 1 22:17:39 2006 +0000
+
+    Add installation chapter to manual.  Remove now-redundant files from
+    src/utils, src/misc.
+    
+    Update copyright years in license.  Add license to manual.
+
+[33mcommit 7641b4a058aedefcf6430000ec7742881f9e2a9f[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Thu Jun 1 21:54:30 2006 +0000
+
+    Fix typos.
+
+[33mcommit 837e5b7fb902bd749106309ef76a5276c73ca34c[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Thu Jun 1 20:11:00 2006 +0000
+
+    Add support for "keyboard" input over the serial port.
+    Revise documentation accordingly.
+    Revise reference solution accordingly.
+    Change real Return key to produce \r, to match what is received on
+    serial port.
+    Update shell example program to expect \r at end of file.
+    Modify testing makefiles to supply /dev/null as input.
+    Add squish-pty help program to deal with Bochs,
+    and modify "pintos" to use it.
+
+[33mcommit 58b5b585e7efb4ce7ffc3d7374fb9f5afc601a0f[m
+Author: Ben Pfaff <blp@cs.stanford.edu>
+Date:   Thu Jun 1 20:07:45 2006 +0000
+
+    Don't put white space before call to $(eval) because that makes GNU
+    make 3.80 on vine barf.

@@ -61,14 +61,14 @@ void
 sema_down (struct semaphore *sema) 
 {
   enum intr_level old_level;
-
   ASSERT (sema != NULL);
   ASSERT (!intr_context ());
 
   old_level = intr_disable ();
-  while (sema->value == 0) 
+  if (sema->value == 0) 
     {
-      list_push_back (&sema->waiters, &thread_current ()->elem);
+      list_push_back(&sema->waiters, &thread_current ()->elem);
+      //list_push_back(&sema->waiters, &thread_current()->elem);
       thread_block ();
     }
   sema->value--;
@@ -113,9 +113,11 @@ sema_up (struct semaphore *sema)
   ASSERT (sema != NULL);
 
   old_level = intr_disable ();
-  if (!list_empty (&sema->waiters)) 
-    thread_unblock (list_entry (list_pop_front (&sema->waiters),
-                                struct thread, elem));
+  if (!list_empty (&sema->waiters)) {
+    list_sort(&sema->waiters, priority_comparator, NULL);
+    thread_unblock (list_entry (list_pop_front (&sema->waiters), struct thread, elem));
+    yield_if_a_ready_is_higher();
+  }
   sema->value++;
   intr_set_level (old_level);
 }
@@ -195,9 +197,26 @@ lock_acquire (struct lock *lock)
   ASSERT (lock != NULL);
   ASSERT (!intr_context ());
   ASSERT (!lock_held_by_current_thread (lock));
-
+  enum intr_level old_level = intr_disable();
+  if(lock->holder){
+    thread_current()->waiting_for = lock;
+    thread_current()->locker = lock->holder;
+    list_push_back(&lock->holder->donations, &thread_current()->donate_elem);
+    struct thread *temp = thread_current();
+    while(temp->locker){
+      if(temp->priority > temp->locker->priority){
+        temp->locker->priority = temp->priority;
+        temp = temp->locker;
+      }
+    }
+    sort_ready_list();
+  }
   sema_down (&lock->semaphore);
   lock->holder = thread_current ();
+  if(thread_current()->waiting_for == lock){
+    thread_current()->waiting_for = NULL;
+  }
+  intr_set_level(old_level);
 }
 
 /* Tries to acquires LOCK and returns true if successful or false
@@ -230,9 +249,26 @@ lock_release (struct lock *lock)
 {
   ASSERT (lock != NULL);
   ASSERT (lock_held_by_current_thread (lock));
-
+  enum intr_level old_level = intr_disable();
+  thread_current()->priority = thread_current()->basepriority;
+  if(!list_empty(&thread_current()->donations)){
+    for(struct list_elem *e = list_front(&thread_current()->donations);
+                          e != list_end(&thread_current()->donations); 
+                          e = list_next(e)){
+      struct thread *t = list_entry(e, struct thread, donate_elem);
+      if(t->waiting_for == lock){
+        t->locker = NULL;
+        list_remove(e);
+      } else {
+        if(thread_current()->priority < t->priority){
+          thread_current()->priority = t->priority;
+        }
+      }
+    }
+  }
   lock->holder = NULL;
   sema_up (&lock->semaphore);
+  intr_set_level(old_level);
 }
 
 /* Returns true if the current thread holds LOCK, false
@@ -251,6 +287,7 @@ struct semaphore_elem
   {
     struct list_elem elem;              /* List element. */
     struct semaphore semaphore;         /* This semaphore. */
+    int priority;
   };
 
 /* Initializes condition variable COND.  A condition variable
@@ -295,12 +332,18 @@ cond_wait (struct condition *cond, struct lock *lock)
   ASSERT (lock_held_by_current_thread (lock));
   
   sema_init (&waiter.semaphore, 0);
-  list_push_back (&cond->waiters, &waiter.elem);
+  waiter.priority = thread_current()->priority;
+  list_insert_ordered (&cond->waiters, &waiter.elem, sema_comparator_condition, NULL);
   lock_release (lock);
+  // printf("========= lock released by %s\n", thread_name());
   sema_down (&waiter.semaphore);
   lock_acquire (lock);
 }
-
+bool sema_comparator_condition(struct list_elem *a, struct list_elem *b, void *aux){
+  struct semaphore_elem * s1 = list_entry(a, struct semaphore_elem, elem);
+  struct semaphore_elem * s2 = list_entry(b, struct semaphore_elem, elem);
+  return s1->priority > s2->priority;
+}
 /* If any threads are waiting on COND (protected by LOCK), then
    this function signals one of them to wake up from its wait.
    LOCK must be held before calling this function.

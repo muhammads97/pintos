@@ -105,9 +105,10 @@ timer_sleep (int64_t ticks)
 {
     ASSERT (intr_get_level () == INTR_ON);
 	if(ticks > 0){
-    	struct thread *t = thread_current();
-    	enum intr_level i_l = intr_disable();
-    	t->blocked_until = ticks + timer_ticks(); //time to wake at
+    struct thread *t = thread_current();
+  	enum intr_level i_l = intr_disable();
+  	t->blocked_until = ticks + timer_ticks(); //time to wake at
+    // printf("thread %s sleep until %d\n", thread_name(),t->blocked_until);
 		list_insert_ordered(&blocked_queue, &t->elem, sleep_list_comparator, NULL);
 		thread_block();
 		intr_set_level(i_l);
@@ -190,17 +191,21 @@ timer_interrupt (struct intr_frame *args UNUSED)
 {
 	ticks++;
 	thread_tick ();
-
 	if(list_empty(&blocked_queue)) return;
 	struct list_elem* e = list_front(&blocked_queue);
 	struct thread* t = list_entry(e, struct thread, elem);
-	while(t->blocked_until < ticks){
+  int i = 0;
+	while(t->blocked_until <= ticks){
 		list_remove(e);
 		thread_unblock(t);
+    // printf("thread %s woke up at %d and current thread is %d\n", t->name, ticks, thread_current()->priority);
 		if(list_empty(&blocked_queue)) return;
 		e = list_front(&blocked_queue);
 		t = list_entry(e, struct thread, elem);
 	}
+  
+
+  yield_if_a_ready_is_higher();
 }
 
 /* Returns true if LOOPS iterations waits for more than one timer

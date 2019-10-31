@@ -52,7 +52,7 @@ test_sleep (int thread_cnt, int iterations)
   test.start = timer_ticks () + 100;
   test.iterations = iterations;
   test.output_pos = output;
-
+  //printf("starting at %d\n", test.start);
   /* Start threads. */
   ASSERT (output != NULL);
   for (i = 0; i < thread_cnt; i++)
@@ -83,12 +83,14 @@ sleeper (void *test_)
 
   /* Make sure we're at the beginning of a timer tick. */
   timer_sleep (1);
-
+  //printf("it's %d now\n", timer_ticks());
   for (i = 1; i <= test->iterations; i++) 
     {
       int64_t sleep_until = test->start + i * 10;
       timer_sleep (sleep_until - timer_ticks ());
+      // printf("after sleep now is %d iteration %d thread %s\n", timer_ticks(), i, thread_name());
       *test->output_pos++ = timer_ticks () - test->start;
+      // printf("============ %d\n", *(test->output_pos-1));
       thread_yield ();
     }
 }

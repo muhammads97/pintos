@@ -201,6 +201,10 @@ thread_create (const char *name, int priority,
   /* Add to run queue. */
   thread_unblock (t);
 
+  if(t->tid != 1 && t->priority > thread_current()->priority){
+    thread_yield();
+  }
+
   return tid;
 }
 
@@ -237,8 +241,9 @@ thread_unblock (struct thread *t)
 
   old_level = intr_disable ();
   ASSERT (t->status == THREAD_BLOCKED);
-  list_push_back (&ready_list, &t->elem);
+  list_insert_ordered (&ready_list, &t->elem, priority_comparator, NULL);
   t->status = THREAD_READY;
+  
   intr_set_level (old_level);
 }
 
@@ -307,13 +312,30 @@ thread_yield (void)
   ASSERT (!intr_context ());
 
   old_level = intr_disable ();
-  if (cur != idle_thread) 
-    list_push_back (&ready_list, &cur->elem);
+  if (cur != idle_thread) {
+    list_insert_ordered (&ready_list, &cur->elem, priority_comparator, NULL);
+    // printf("=====================\n");
+    // print_list_ready();
+    // printf("=====================\n");
+  } 
   cur->status = THREAD_READY;
   schedule ();
   intr_set_level (old_level);
 }
-
+void yield_if_a_ready_is_higher(){
+  // printf("idle thread id = %d  %d\n", idle_thread->tid, idle_thread->priority);
+  // printf("hhhhhhhhh %d   %d\n", thread_current()->tid, thread_current()->priority);
+  
+  if(thread_current()->tid == 2) return;
+  //enum intr_level old_level = intr_disable();
+  // print_list_ready();
+  struct thread *temp = list_entry(list_front(&ready_list), struct thread, elem);
+  if(temp->priority > thread_current()->priority){
+    thread_yield();
+  }
+  // printf("current thread %d %d\n", thread_current()->tid, thread_current()->priority);
+  //intr_set_level(old_level);
+}
 /* Invoke function 'func' on all threads, passing along 'aux'.
    This function must be called with interrupts off. */
 void
@@ -335,9 +357,42 @@ thread_foreach (thread_action_func *func, void *aux)
 void
 thread_set_priority (int new_priority) 
 {
-  thread_current ()->priority = new_priority;
+  enum intr_level old_level = intr_disable();
+  if(list_empty(&thread_current()->donations)){
+    thread_current ()->priority = new_priority;
+    thread_current ()->basepriority = new_priority;
+  } else {
+    struct list_elem * e = list_front(&thread_current()->donations);
+    struct thread * highest_donation_thread = list_entry(e, struct thread, donate_elem);
+    if(highest_donation_thread->priority > new_priority){
+      thread_current ()->basepriority = new_priority;
+    } else {
+      thread_current ()->priority = new_priority;
+      thread_current ()->basepriority = new_priority;
+    }
+  }
+  struct thread * temp = thread_current();
+  while(temp->locker){
+    if(temp->priority > temp->locker->priority){
+      temp->locker->priority = temp->priority;
+      temp = temp->locker;
+    }
+  }
+  //sort ready list
+  list_sort(&ready_list, priority_comparator, NULL);
+  //yield or not
+  if(!list_empty(&ready_list)){
+    temp = list_entry(list_front(&ready_list), struct thread, elem);
+    if(temp->priority > thread_current()->priority){
+      thread_yield();
+    }
+  }
+  
+  intr_set_level(old_level);
 }
-
+void sort_ready_list(){
+  list_sort(&ready_list, priority_comparator, NULL);
+}
 /* Returns the current thread's priority. */
 int
 thread_get_priority (void) 
@@ -462,7 +517,11 @@ init_thread (struct thread *t, const char *name, int priority)
   strlcpy (t->name, name, sizeof t->name);
   t->stack = (uint8_t *) t + PGSIZE;
   t->priority = priority;
+  t->basepriority = priority;
   t->magic = THREAD_MAGIC;
+  t->waiting_for = NULL;
+  t->locker = NULL;
+  list_init(&t->donations);
 
   old_level = intr_disable ();
   list_push_back (&all_list, &t->allelem);
@@ -582,3 +641,20 @@ allocate_tid (void)
 /* Offset of `stack' member within `struct thread'.
    Used by switch.S, which can't figure it out on its own. */
 uint32_t thread_stack_ofs = offsetof (struct thread, stack);
+
+bool priority_comparator(struct list_elem *a, struct list_elem *b, void *aux){
+  struct thread *t1 = list_entry(a, struct thread, elem);
+  struct thread *t2 = list_entry(b, struct thread, elem);
+  return t1-> priority > t2->priority;
+}
+
+void print_list_ready(){
+  struct list_elem *e = list_front(&ready_list);
+  int i = 0;
+  while(e != list_end(&ready_list)){
+    struct thread *t = list_entry(e, struct thread, elem);
+    printf("%d thread %d with priority %d \n", i, t->tid, t->priority);
+    i++;
+    e = list_next(e);
+  }
+}

@@ -17,6 +17,7 @@
 void
 test_mlfqs_load_1 (void) 
 {
+  printf("test started\n");
   int64_t start_time;
   int elapsed;
   int load_avg;
@@ -35,15 +36,17 @@ test_mlfqs_load_1 (void)
         fail ("load average is %d.%02d "
               "but should be between 0 and 1 (after %d seconds)",
               load_avg / 100, load_avg % 100, elapsed);
-      else if (load_avg > 50)
+      else if (load_avg > 50){
+        msg("break at %d\n", load_avg);
         break;
+      }
       else if (elapsed > 45)
         fail ("load average stayed below 0.5 for more than 45 seconds");
     }
 
   if (elapsed < 38)
     fail ("load average took only %d seconds to rise above 0.5", elapsed);
-  msg ("load average rose to 0.5 after %d seconds", elapsed);
+  msg ("load average rose to 0.5 after %d seconds %d", elapsed, load_avg);
 
   msg ("sleeping for another 10 seconds, please wait...");
   timer_sleep (TIMER_FREQ * 10);

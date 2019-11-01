@@ -112,6 +112,7 @@ thread_init (void)
   load_avg = 0;
   initial_thread->nice = NICE_DEFAULT;
   initial_thread->recent_cpu = 0;
+  // printf("thread initialized\n");
 }
 
 /* Starts preemptive thread scheduling by enabling interrupts.
@@ -147,22 +148,29 @@ thread_tick (void)
 #endif
   else
     kernel_ticks++;
-
+  bool not_idle = (t != idle_thread);
   if(thread_mlfqs) {
-    bool not_idle = (t != idle_thread);
-    if(not_idle)
+    enum intr_level old_level = intr_disable();
+    if(not_idle){
       t->recent_cpu += toFixedPt(1);
-      bool p_update = (timer_ticks() % PRIORITY_UPDATE_FREQ == 0);
-      if(p_update) {
-        bool load_rec_update = (timer_ticks() % TIMER_FREQ == 0);
-        if (load_rec_update) {
-          int ready_running_threads = 0;
-          ready_running_threads += list_size (&ready_list) +((not_idle)? 1:0) ;
-          load_avg = multiplyXY(toFixedPt(59) / 60, load_avg)+ toFixedPt(1) / 60 * ready_running_threads;
-        }
-        thread_foreach (update_priority_recent_cpu,(void *)load_rec_update);
-        list_sort (&ready_list, priority_comparator, NULL);
-        intr_yield_on_return ();
+    }
+    int64_t t_ticks = timer_ticks();
+    bool p_update = (t_ticks % PRIORITY_UPDATE_FREQ == 0);
+    if(p_update) {
+      bool load_rec_update = (t_ticks % TIMER_FREQ == 0);
+      if (load_rec_update) {
+        int ready_running_threads = 0;
+        int temp = 0;
+        if(not_idle) temp = 1;
+        ready_running_threads = (list_size (&ready_list) + temp) ;
+        load_avg = (multiplyXY(toFixedPt(59) , load_avg)
+                    + toFixedPt(1) * ready_running_threads) / 60;
+      }
+      thread_foreach_ready_list (update_priority_recent_cpu,(void *)load_rec_update);
+      list_sort (&ready_list, priority_comparator, NULL);
+      intr_set_level(old_level);
+      intr_yield_on_return ();
+
     }
   }else if (++thread_ticks >= TIME_SLICE){ 
     intr_yield_on_return (); /* Enforce preemption. */
@@ -238,13 +246,13 @@ thread_create (const char *name, int priority,
 
   /* Add to run queue. */
   thread_unblock (t);
-
   if(t->tid != 1 && t->priority > thread_current()->priority){
     thread_yield();
   }
 
   return tid;
 }
+
 
 /* Puts the current thread to sleep.  It will not be scheduled
    again until awoken by thread_unblock().
@@ -385,6 +393,21 @@ thread_foreach (thread_action_func *func, void *aux)
        e = list_next (e))
     {
       struct thread *t = list_entry (e, struct thread, allelem);
+      func (t, aux);
+    }
+}
+
+void
+thread_foreach_ready_list (thread_action_func *func, void *aux)
+{
+  struct list_elem *e;
+
+  ASSERT (intr_get_level () == INTR_OFF);
+
+  for (e = list_begin (&ready_list); e != list_end (&ready_list);
+       e = list_next (e))
+    {
+      struct thread *t = list_entry (e, struct thread, elem);
       func (t, aux);
     }
 }
@@ -731,6 +754,7 @@ void print_list_ready(){
   struct list_elem *e = list_front(&ready_list);
   int i = 0;
   while(e != list_end(&ready_list)){
+    timer_sleep(1);
     struct thread *t = list_entry(e, struct thread, elem);
     printf("%d thread %d with priority %d \n", i, t->tid, t->priority);
     i++;

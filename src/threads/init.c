@@ -116,8 +116,10 @@ main (void)
 #endif
 
   /* Start thread scheduler and enable interrupts. */
+  
   thread_start ();
   serial_init_queue ();
+    printf("after start \n");
   timer_calibrate ();
 
 #ifdef FILESYS

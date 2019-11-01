@@ -126,6 +126,7 @@ test_mlfqs_load_60 (void)
       snprintf(name, sizeof name, "load %d", i);
       thread_create (name, PRI_DEFAULT, load_thread, NULL);
     }
+    // print_list_ready();
   msg ("Starting threads took %d seconds.",
        timer_elapsed (start_time) / TIMER_FREQ);
   
@@ -146,7 +147,7 @@ load_thread (void *aux UNUSED)
   int64_t sleep_time = 10 * TIMER_FREQ;
   int64_t spin_time = sleep_time + 60 * TIMER_FREQ;
   int64_t exit_time = spin_time + 60 * TIMER_FREQ;
-
+  // printf("thread %s set nice %d at %d current time\n", thread_name(), thread_get_nice(), timer_ticks());
   thread_set_nice (20);
   timer_sleep (sleep_time - timer_elapsed (start_time));
   while (timer_elapsed (start_time) < spin_time)

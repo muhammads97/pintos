@@ -22,7 +22,9 @@ typedef int tid_t;
 /* Thread priorities. */
 #define PRI_MIN 0                       /* Lowest priority. */
 #define PRI_DEFAULT 31                  /* Default priority. */
-#define PRI_MAX 63                      /* Highest priority. */
+#define PRI_MAX 63 
+
+#define NICE_DEFAULT 0                     /* Highest priority. */
 
 /* A kernel thread or user process.
 
@@ -98,6 +100,8 @@ struct thread
     /* Shared between thread.c and synch.c. */
     struct list_elem elem;              /* List element. */
 
+    int nice;
+    int64_t recent_cpu;
 #ifdef USERPROG
     /* Owned by userprog/process.c. */
     uint32_t *pagedir;                  /* Page directory. */
@@ -106,6 +110,12 @@ struct thread
     /* Owned by thread.c. */
     unsigned magic;                     /* Detects stack overflow. */
   };
+
+  // struct advanced_ready_queue{
+  //   struct list* list;
+  //   struct list_elem elem;
+  //   int priority;
+  // };
 
 /* If false (default), use round-robin scheduler.
    If true, use multi-level feedback queue scheduler.
@@ -147,4 +157,5 @@ bool priority_comparator(struct list_elem *a, struct list_elem *b, void *aux);
 void yield_if_a_ready_is_higher();
 void print_list_ready();
 void sort_ready_list();
+// bool advanced_queue_comparator(struct list_elem* a, struct list_elem*b, void * aux);
 #endif /* threads/thread.h */

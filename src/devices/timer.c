@@ -60,7 +60,7 @@ timer_calibrate (void)
       loops_per_tick <<= 1;
       ASSERT (loops_per_tick != 0);
     }
-
+  // printf("hhhhh\n");
   /* Refine the next 8 bits of loops_per_tick. */
   high_bit = loops_per_tick;
   for (test_bit = high_bit >> 1; test_bit != high_bit >> 10; test_bit >>= 1)
@@ -110,8 +110,12 @@ timer_sleep (int64_t ticks)
   	t->blocked_until = ticks + timer_ticks(); //time to wake at
     // printf("thread %s sleep until %d\n", thread_name(),t->blocked_until);
 		list_insert_ordered(&blocked_queue, &t->elem, sleep_list_comparator, NULL);
+    // printf("=========== %d\n", list_size(&blocked_queue));
 		thread_block();
+    // printf("current thread %s", thread_name());
+
 		intr_set_level(i_l);
+    
 	}
 }
 
@@ -189,12 +193,14 @@ timer_print_stats (void)
 static void
 timer_interrupt (struct intr_frame *args UNUSED)
 {
+  // printf("%d\n", list_size(&blocked_queue));
 	ticks++;
 	thread_tick ();
 	if(list_empty(&blocked_queue)) return;
 	struct list_elem* e = list_front(&blocked_queue);
 	struct thread* t = list_entry(e, struct thread, elem);
   int i = 0;
+  // printf("%d ====== %d\n", t->blocked_until, ticks);
 	while(t->blocked_until <= ticks){
 		list_remove(e);
 		thread_unblock(t);
@@ -205,7 +211,7 @@ timer_interrupt (struct intr_frame *args UNUSED)
 	}
   
 
-  yield_if_a_ready_is_higher();
+  // yield_if_a_ready_is_higher();
 }
 
 /* Returns true if LOOPS iterations waits for more than one timer

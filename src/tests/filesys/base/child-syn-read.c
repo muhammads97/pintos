@@ -18,7 +18,7 @@ static char buf[BUF_SIZE];
 int
 main (int argc, const char *argv[]) 
 {
-  int child_idx;
+  int child_idx = 8;
   int fd;
   size_t i;
 
@@ -26,15 +26,16 @@ main (int argc, const char *argv[])
   
   CHECK (argc == 2, "argc must be 2, actually %d", argc);
   child_idx = atoi (argv[1]);
-
+  // printf("%d\n", child_idx);
   random_init (0);
   random_bytes (buf, sizeof buf);
-
   CHECK ((fd = open (file_name)) > 1, "open \"%s\"", file_name);
+  // printf("opened\n");
   for (i = 0; i < sizeof buf; i++) 
     {
       char c;
       CHECK (read (fd, &c, 1) > 0, "read \"%s\"", file_name);
+      printf("read\n");
       compare_bytes (&c, buf + i, 1, i, file_name);
     }
   close (fd);

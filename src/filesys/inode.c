@@ -125,7 +125,6 @@ inode_open (block_sector_t sector)
           return inode; 
         }
     }
-
   /* Allocate memory. */
   inode = malloc (sizeof *inode);
   if (inode == NULL)

@@ -4,6 +4,7 @@
 #include <debug.h>
 #include <list.h>
 #include <stdint.h>
+#include "threads/synch.h"
 
 /* States in a thread's life cycle. */
 enum thread_status
@@ -102,6 +103,19 @@ struct thread
 
     int nice;
     int64_t recent_cpu;
+
+    struct thread * parent;
+    struct list children;
+    struct list_elem to_be_child;
+    int exit_status;
+    struct semaphore wait_for_child;
+    int ch_tid;
+    struct file* userprog;
+    struct list files;
+    int descriptor;
+    struct semaphore exec;
+    bool exec_child_success;
+    int child_exit_status;
 #ifdef USERPROG
     /* Owned by userprog/process.c. */
     uint32_t *pagedir;                  /* Page directory. */
@@ -121,6 +135,7 @@ struct thread
    If true, use multi-level feedback queue scheduler.
    Controlled by kernel command-line option "-o mlfqs". */
 extern bool thread_mlfqs;
+extern struct semaphore file_access;
 
 void thread_init (void);
 void thread_start (void);

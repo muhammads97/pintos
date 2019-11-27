@@ -85,7 +85,7 @@ palloc_get_multiple (enum palloc_flags flags, size_t page_cnt)
     pages = pool->base + PGSIZE * page_idx;
   else
     pages = NULL;
-
+  // if(page_idx > 200) return NULL;
   if (pages != NULL) 
     {
       if (flags & PAL_ZERO)
@@ -98,6 +98,10 @@ palloc_get_multiple (enum palloc_flags flags, size_t page_cnt)
     }
 
   return pages;
+}
+
+int free_pages_cnt(){
+  return bitmap_count ((&user_pool)->used_map, 0, 367, false);
 }
 
 /* Obtains a single free page and returns its kernel virtual
@@ -180,3 +184,4 @@ page_from_pool (const struct pool *pool, void *page)
 
   return page_no >= start_page && page_no < end_page;
 }
+

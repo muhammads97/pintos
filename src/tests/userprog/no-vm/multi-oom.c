@@ -111,7 +111,6 @@ main (int argc, char *argv[])
   bool is_at_root = (n == 0);
   if (is_at_root)
     msg ("begin");
-
   /* If -k is passed, crash this process. */
   if (argc > 2 && !strcmp(argv[2], "-k"))
     {
@@ -125,30 +124,36 @@ main (int argc, char *argv[])
   for (i = 0; i < howmany; i++)
     {
       pid_t child_pid;
-
+      // printf("round %d\n", i);
       /* Spawn a child that will be abnormally terminated.
          To speed the test up, do this only for processes
          spawned at a certain depth. */
       if (n > EXPECTED_DEPTH_TO_PASS/2)
         {
+          // printf("creating chrash process at depth %d\n", n+1);
           child_pid = spawn_child (n + 1, CRASH);
           if (child_pid != -1)
             {
               if (wait (child_pid) != -1)
                 fail ("crashed child should return -1.");
+
             }
           /* If spawning this child failed, so should
              the next spawn_child below. */
+            //  printf("crash process returned -1 successfully\n");
         }
-
+      
       /* Now spawn the child that will recurse. */
+      // printf("creating recurse child at depth %d\n", n+1);
       child_pid = spawn_child (n + 1, RECURSE);
-
+      // printf("recurse child created %d\n" , child_pid);
       /* If maximum depth is reached, return result. */
-      if (child_pid == -1)
+      if (child_pid == -1){
+        // printf("reached max\n");
         return n;
-
+      }
       /* Else wait for child to report how deeply it was able to recurse. */
+      // printf("waiting for child %d\n", child_pid);
       int reached_depth = wait (child_pid);
       if (reached_depth == -1)
         fail ("wait returned -1.");
@@ -163,7 +168,6 @@ main (int argc, char *argv[])
               i, howmany, expected_depth, reached_depth);
       ASSERT (expected_depth == reached_depth);
     }
-
   consume_some_resources ();
 
   if (n == 0)
@@ -173,7 +177,6 @@ main (int argc, char *argv[])
       msg ("success. program forked %d times.", howmany);
       msg ("end");
     }
-
   return expected_depth;
 }
 // vim: sw=2

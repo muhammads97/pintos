@@ -114,8 +114,9 @@ pagedir_set_page (uint32_t *pd, void *upage, void *kpage, bool writable)
       *pte = pte_create_user (kpage, writable);
       return true;
     }
-  else
+  else{
     return false;
+  }
 }
 
 /* Looks up the physical address that corresponds to user virtual

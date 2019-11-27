@@ -62,6 +62,7 @@ static unsigned thread_ticks;   /* # of timer ticks since last yield. */
    If true, use multi-level feedback queue scheduler.
    Controlled by kernel command-line option "-o mlfqs". */
 bool thread_mlfqs;
+struct semaphore file_access;
 
 static void kernel_thread (thread_func *, void *aux);
 
@@ -115,6 +116,8 @@ thread_init (void)
   load_avg = 0;
   initial_thread->recent_cpu = 0;
   initial_thread->nice = NICE_DEFAULT;
+
+  sema_init(&file_access, 1);
   
 }
 
@@ -217,12 +220,12 @@ thread_create (const char *name, int priority,
   tid_t tid;
 
   ASSERT (function != NULL);
-
+  if(free_pages_cnt() < 7) return TID_ERROR;
   /* Allocate thread. */
   t = palloc_get_page (PAL_ZERO);
   if (t == NULL)
     return TID_ERROR;
-
+  // if(thread_current()->depth + 1 > 31) return TID_ERROR;
   /* Initialize thread. */
   init_thread (t, name, priority);
   tid = t->tid = allocate_tid ();
@@ -241,8 +244,14 @@ thread_create (const char *name, int priority,
   sf = alloc_frame (t, sizeof *sf);
   sf->eip = switch_entry;
   sf->ebp = 0;
-
   /* Add to run queue. */
+  t->parent = thread_current();
+  t->ch_tid = -1;
+  t->descriptor = 1;
+  t->exec_child_success = false;
+  t->child_exit_status = -1;
+  list_push_back(&thread_current()->children, &t->to_be_child);
+  // printf("kkkkkkkkkk %d %s\n", list_size(&thread_current()->children), thread_name());
   thread_unblock (t);
 
   if(t->tid != 1 && t->priority > thread_current()->priority){
@@ -592,6 +601,10 @@ init_thread (struct thread *t, const char *name, int priority)
   t->waiting_for = NULL;
   t->locker = NULL;
   list_init(&t->donations);
+  list_init(&t->children);
+  list_init(&t->files);
+  sema_init(&t->wait_for_child, 0);
+  sema_init(&t->exec, 0);
   if(thread_mlfqs){
     calculate_priority(t);
     if(t != initial_thread){
@@ -613,8 +626,10 @@ alloc_frame (struct thread *t, size_t size)
   /* Stack data is always allocated in word-size units. */
   ASSERT (is_thread (t));
   ASSERT (size % sizeof (uint32_t) == 0);
-
   t->stack -= size;
+  // if(is_user_vaddr(t->stack)){
+  //   return NULL;
+  // }
   return t->stack;
 }
 

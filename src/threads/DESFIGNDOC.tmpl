@@ -28,27 +28,63 @@ Mohamed Abdelhakim mohamedabdelhakem476@gmail.com
 >> A1: Copy here the declaration of each new or changed `struct' or
 >> `struct' member, global or static variable, `typedef', or
 >> enumeration.  Identify the purpose of each in 25 words or less.
+>> modified the thread struct to hold the wake up time (blocked_until), the lock it's waiting for,
+>> the holder of that lock, a list of donators, the nice and recent cpu values and the basepriority to allow donations.
+struct thread {
+    tid_t tid;                        
+    enum thread_status status;          
+    char name[16];                     
+    uint8_t *stack;                  
+    int priority;                       
+    int basepriority;                   
+    struct list_elem allelem;           
+    int64_t blocked_until;              
+    struct lock *waiting_for;
+    struct thread *locker;
+    struct list donations;
+    struct list_elem donate_elem;
+    struct list_elem elem;
+    int nice;
+    int64_t recent_cpu;
+#ifdef USERPROG
+    uint32_t *pagedir;        
+#endif
+    unsigned magic;               
+}; 
+
+>> multilevel queue for 64 priority values to use in the advanced scheduler.
+struct list ready_array[PRI_MAX + 1];
+
+>> a queue to use for the sleeping threads
+static struct list blocked_queue;
+
+
 
 ---- ALGORITHMS ----
 
 >> A2: Briefly describe what happens in a call to timer_sleep(),
 >> including the effects of the timer interrupt handler.
+>> we used a blocked queue to put the sleeping thread in and used the function thread_block();
 
 >> A3: What steps are taken to minimize the amount of time spent in
 >> the timer interrupt handler?
+>> inserting the sleeping threads in the queue ordered by thier wake up time.
 
 ---- SYNCHRONIZATION ----
 
 >> A4: How are race conditions avoided when multiple threads call
 >> timer_sleep() simultaneously?
+>> disable interrupt to avoid mistakes when dealing with the blocked queue.
 
 >> A5: How are race conditions avoided when a timer interrupt occurs
 >> during a call to timer_sleep()?
+>> we disabled interrupts.
 
 ---- RATIONALE ----
 
 >> A6: Why did you choose this design?  In what ways is it superior to
 >> another design you considered?
+>> to minimize time.
 
 			 PRIORITY SCHEDULING
 			 ===================
@@ -67,23 +103,31 @@ Mohamed Abdelhakim mohamedabdelhakem476@gmail.com
 
 >> B3: How do you ensure that the highest priority thread waiting for
 >> a lock, semaphore, or condition variable wakes up first?
+>> using oredered insertion and sorting whenever needed.
 
 >> B4: Describe the sequence of events when a call to lock_acquire()
 >> causes a priority donation.  How is nested donation handled?
+>> in a similar way to a linked list looping.
 
 >> B5: Describe the sequence of events when lock_release() is called
 >> on a lock that a higher-priority thread is waiting for.
+>> the thread with higher priority is waiting on the top of the queue
+>> it aquirse the lock before other threads.
 
 ---- SYNCHRONIZATION ----
 
 >> B6: Describe a potential race in thread_set_priority() and explain
 >> how your implementation avoids it.  Can you use a lock to avoid
 >> this race?
+>> applying nested donation, and priority donation while more than one thread try to update it's donation
+>> disable interrupt.
+>> yes we can use a lock.
 
 ---- RATIONALE ----
 
 >> B7: Why did you choose this design?  In what ways is it superior to
 >> another design you considered?
+
 
 			  ADVANCED SCHEDULER
 			  ==================
